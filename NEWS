@@ -6,7 +6,8 @@ version 0.2 - 2015-07-25 ...
 BUGFIXES
 
 - setting functions dependencies right (package functions would not find functions they used until external packages were loaded manually)
-
+- revising vigenettes (error when trying to plot (rzeit_vignette) and setting colors of parties (rzeit_network)
+- adding test if environment file exist (zeitSetApiKey)
 
 MISC
 
