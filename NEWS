@@ -1,0 +1,13 @@
+
+
+version 0.2 - 2015-07-25 ... 
+-----------------------------
+
+BUGFIXES
+
+- setting functions dependencies right (package functions would not find functions they used until external packages were loaded manually)
+
+
+MISC
+
+- first puplication on Github

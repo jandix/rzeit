@@ -1,0 +1,118 @@
+---
+title: "Instructional Vignette for rzeit package"
+author: "Jana Blahak & Jan Dix"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+  The `rzeit-package` is based on the Developer API by Zeit Online, a German newspaper portal.The package is the result of an university course, teaching the basic methods of web scraping.The following sections show basic examples of the different functions included in the package.    
+    
+```{r loading required packages, warning = FALSE, results = "hide", message = FALSE}
+library(rzeit)
+```    
+
+### Basic functions
+
+`zeitSetApiKey` represents the beginning of the package. The function saves the API Key to the R environemnt. If the key is stored, the key has not to be entered every time using the `rzeit`-package - look here to get an api key: http://developer.zeit.de/quickstart/.
+
+```{r, setKey, warning = FALSE, message = FALSE, eval = FALSE}
+zeitSetApiKey(apiKey = "set_your_api_key_here")
+```
+
+
+`fromZeit` represents the central function of the package. Because the API Key is stored in the environment, the key has not to be delivered. 
+
+```{r first, eval = FALSE}
+results <- fromZeit(q = "Angela Merkel",
+                    limit = "50",
+                    dateBegin = "2012-01-01",
+                    dateEnd = "2015-05-20")
+```
+
+
+`zeitFrequencies` converts the list returned from `fromZeit` into a data frame including frequncies in a given period.  
+ 
+
+```{r second, eval = FALSE}
+freq <- zeitFrequencies(ls = results,
+                        sort = "days",
+                        save = FALSE) 
+```
+
+`zeitToDf` converts the list returned from `fromZeit` into a data frame and containing the original articles.
+
+```{r third, eval = FALSE}
+articles <- zeitToDf(ls = results,
+                          sort = "days",
+                          save = FALSE) 
+```
+
+
+`zeitPlot` is based on the basic function `plot`. It plots date vs. frequencies based on the frequency data frame returned by `zeitFrequencies`. 
+
+```{r fourth, eval = FALSE}
+zeitPlot(df = freq) 
+```
+
+### Simple Example
+
+The following example returns articles about "Angela Merkel", the current German  chancellor, between the 01st January, 2004 and the 31st December, 2014. In the first part we provide you with two examples to help distinguish between different parameters. We use `zeitFrequencies` to convert the lists to a data frame, sorted by week. In a last step, we print both results, using `zeitPlot`, to clarify the differences between the examples.
+
+
+#### Perform queries
+
+At first we set `multipleTokens = TRUE`. The API will return results both for "Angela" and "Merkel". We further set `limit = "1000"` and `split = FALSE`. As a result, the first thousand articles are returned descending.
+
+
+```{r withoutSplit, eval = FALSE}
+results_withoutSplit <- fromZeit(q = "Angela Merkel",
+                                 split = FALSE,
+                                 limit = "1000",
+                                 multipleTokens = TRUE,
+                                 dateBegin = "2013-01-01",
+                                 dateEnd = "2014-12-31")
+
+results_withoutSplit <- zeitFrequencies(ls = results_withoutSplit,
+                                        sort = "month",
+                                        save = FALSE)
+                                
+frequencies_withoutSplit <- results_withoutSplit
+```
+
+For the second example we set `multipleTokens = FALSE`. The API will return results for the whole string "Angela Merkel". Furthermore, we set `limit = "1000"` and `split = TRUE`. As a result the function returns all articles within the date range now.
+
+```{r withSplit, eval = FALSE}
+results_split <- fromZeit(q = "Angela Merkel",
+                          split = TRUE,
+                          limit = "1000",
+                          multipleTokens = FALSE,
+                          dateBegin = "2013-01-01",
+                          dateEnd = "2014-12-31")
+
+results_split <- zeitFrequencies(ls = results_split,
+                                 sort = "month",
+                                 save = FALSE)
+                                
+frequencies_split <- results_split
+
+
+```
+
+#### Plot results
+
+Lastly, we plot the results of the examples next to each other. Because the code requires an API Key, we load a prepared plot based on the code above in the background.
+
+```{r, fig.show = "hold", eval = FALSE}
+par(mfrow=c(1, 2))
+zeitPlot(frequencies_split, title = "with split", absolute = FALSE)
+zeitPlot(frequencies_withoutSplit, title = "without split", absolute = FALSE)
+par(mfrow=c(1, 1))
+```
+![plot of total_instructional_vignette](figure/total_instructional_vignette.png) 
+
+
+
+
