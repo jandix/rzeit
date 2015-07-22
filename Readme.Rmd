@@ -24,9 +24,13 @@ devtools::install_github("tollpatsch/rzeit")
 
 # Authors
 
-Jana Blahak - jana.blahak@uni-konstanz.de
-Jan Dix - jan.dix@uni-konstanz.de
+Jana Blahak 
+jana.blahak@uni-konstanz.de
+
+Jan Dix 
+jan.dix@uni-konstanz.de
 
 Special thanks to: 
 
-[Simon Munzert](http://simonmunzert.github.io/) and [Peter Meißner](https://github.com/petermeissner)
+[Simon Munzert](http://simonmunzert.github.io/) 
+[Peter Meißner](https://github.com/petermeissner)
