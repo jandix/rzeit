@@ -30,7 +30,4 @@ jana.blahak@uni-konstanz.de
 Jan Dix 
 jan.dix@uni-konstanz.de
 
-Special thanks to: 
-
-[Simon Munzert](http://simonmunzert.github.io/) 
-[Peter Meißner](https://github.com/petermeissner)
+Special thanks to [Simon Munzert](http://simonmunzert.github.io/) and [Peter Meißner](https://github.com/petermeissner), who helped us entering the world of R and GitHub.
