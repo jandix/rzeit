@@ -44,7 +44,7 @@ fromZeit <- function(api = Sys.getenv("zeit_api_key"),
                      limit = "50",
                      dateBegin = "2004-01-01",
                      dateEnd = "2014-12-31",
-                     split = FALSE,
+                     split = TRUE,
                      multipleTokens = FALSE){
   # variables saving additionally in the list
   query <- q
