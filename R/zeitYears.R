@@ -53,11 +53,16 @@ yearsort <- function(ls, save = FALSE, freq){
   maxi <- max(dfFreqs$freq)
   dfFreqs$freqPro <- round(dfFreqs$freq * 100 / maxi)
 
+
   # creating look up table for title, date, link and week
 
   dfArticle <- data.frame(yearnum)
   dfArticle$date <- as.Date(df$matches.release_date)
   dfArticle$title <- df$matches.title
+  dfArticle$subtitle <- df$matches.subtitle
+  dfArticle$snippet <- df$matches.snippet
+  dfArticle$teaserText <- df$matches.teaser_text
+  dfArticle$teaserTitle <- df$matches.teaser_title
   dfArticle$link <- df$matches.href
 
   lastRow <- as.numeric(nrow(dfFreqs))
