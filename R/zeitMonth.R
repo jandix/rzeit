@@ -61,7 +61,7 @@ monthsort <- function(ls, save = FALSE, freq){
 
  # creating look up table for title, date, link and week
 
-  dfArticle <- data.frame(daynum)
+  dfArticle <- data.frame(monthnum)
   dfArticle$date <- as.Date(df$matches.release_date)
   dfArticle$title <- df$matches.title
   dfArticle$subtitle <- df$matches.subtitle
