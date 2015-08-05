@@ -48,7 +48,12 @@ daysort <- function(ls, save = FALSE, freq){
   dfArticle <- data.frame(daynum)
   dfArticle$date <- as.Date(df$matches.release_date)
   dfArticle$title <- df$matches.title
+  dfArticle$subtitle <- df$matches.subtitle
+  dfArticle$snippet <- df$matches.snippet
+  dfArticle$teaserText <- df$matches.teaser_text
+  dfArticle$teaserTitle <- df$matches.teaser_title
   dfArticle$link <- df$matches.href
+  
 
   if (freq == TRUE){
     # save if TRUE
