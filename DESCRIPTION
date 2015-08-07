@@ -13,7 +13,7 @@ VignetteBuilder: knitr
 Imports: stringr, jsonlite, lubridate
 Suggests: rvest, XML, plyr, networkD3, knitr
 NeedsCompilation: no
-Packaged: 2015-07-21 10:57:11 UTC; Jan
+Packaged: 2015-08-07 13:51:38 UTC; Jan
 Author: Jan Dix [cre],
   Jana Blahak [aut]
 Maintainer: Jan Dix <jan.dix@uni-konstanz.de>

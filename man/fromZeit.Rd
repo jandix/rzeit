@@ -5,7 +5,7 @@
 \title{Connects to Zeit Online Api}
 \usage{
 fromZeit(api = Sys.getenv("zeit_api_key"), q, limit = "50",
-  dateBegin = "2004-01-01", dateEnd = "2014-12-31", split = FALSE,
+  dateBegin = "2004-01-01", dateEnd = "2014-12-31", split = TRUE,
   multipleTokens = FALSE)
 }
 \arguments{
