@@ -1,9 +1,10 @@
 ---
-title: "Instructional Vignette for rzeit package"
+title: "Introductory Vignette for rzeit package"
 author: "Jana Blahak & Jan Dix"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
+  %\VignetteIndexEntry{Introductory Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -22,6 +23,9 @@ Currently, the package is only available on GitHub. Using the *devtools* package
 
 ```{r install github, warning = FALSE, results = "hide", message = FALSE, eval = FALSE}
 devtools::install_github("tollpatsch/rzeit")
+```
+
+```{r loading rzeit, warning = FALSE, results = "hide", message = FALSE, eval = TRUE}
 library(rzeit)
 ```    
 
@@ -32,6 +36,8 @@ library(stringr)
 library(jsonlite)
 library(lubridate)
 ```    
+
+
 
 ## Basic functions
 

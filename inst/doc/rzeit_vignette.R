@@ -1,6 +1,8 @@
 ## ----install github, warning = FALSE, results = "hide", message = FALSE, eval = FALSE----
 #  devtools::install_github("tollpatsch/rzeit")
-#  library(rzeit)
+
+## ----loading rzeit, warning = FALSE, results = "hide", message = FALSE, eval = TRUE----
+library(rzeit)
 
 ## ----loading required packages, warning = FALSE, error = FALSE, results = "hide", message = FALSE, eval=FALSE----
 #  library(stringr)
