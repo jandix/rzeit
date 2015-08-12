@@ -1,7 +1,7 @@
 Package: rzeit
 Title: Client for the ZEIT ONLINE Content API
 Description: Interface to gather newspaper articles from ZEIT ONLINE, based on a multilevel query. Including sorting algorithms and graphical output options. 
-Version: 0.2
+Version: 0.2.1
 Date: 2015-07-03
 Authors@R: c(person("Jan", "Dix",  role = c("cre"), email = "jan.dix@uni-konstanz.de"), 
 	person ("Jana", "Blahak", role = c("aut"), email= "jana.blahak@uni-konstanz.de"),

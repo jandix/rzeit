@@ -12,7 +12,7 @@
 #' @export
 
 zeitSetApiKey <- function(apiKey,
-                          path = paste0(normalizePath("~/"),".Renviron")){
+                          path = paste(normalizePath("~/"), ".Renviron", sep = "/")){
 
 if(!file.exists(path)) file.create(path)
 

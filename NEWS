@@ -1,4 +1,9 @@
+version 0.2.1 - 2015-08-12
 
+BUGFIXES
+
+- Updating Vignettes (adding some additional information and a explanation of the data)
+- fixing path structure in setApiKey - function (thanks to Fabio Molo)
 
 version 0.2 - 2015-07-25 ... 
 -----------------------------
