@@ -1,21 +1,32 @@
 Package: rzeit
 Title: Client for the ZEIT ONLINE Content API
-Description: Interface to gather newspaper articles from ZEIT ONLINE, based on a multilevel query. Including sorting algorithms and graphical output options. 
-Version: 0.2.1
-Date: 2015-07-03
+Description: Interface to gather newspaper articles from ZEIT ONLINE, based on a
+    multilevel query. Including sorting algorithms and graphical output options.
+Version: 0.3
+Date: 2016-01-24
 Authors@R: c(person("Jan", "Dix",  role = c("cre"), email = "jan.dix@uni-konstanz.de"), 
 	person ("Jana", "Blahak", role = c("aut"), email= "jana.blahak@uni-konstanz.de"),
 	person ("Simon", "Munzert", role = c("tch")))
-Depends: R (>= 3.2.0)
+Depends:
+    R (>= 3.2.0)
 License: MIT + file
 LazyData: TRUE
 VignetteBuilder: knitr
-Imports: stringr, jsonlite, lubridate
-Suggests: rvest, XML, plyr, networkD3, knitr
+Imports:
+    stringr,
+    jsonlite,
+    lubridate,
+    plyr
+Suggests:
+    rvest,
+    XML,
+    networkD3,
+    knitr
 NeedsCompilation: no
 Packaged: 2015-08-07 13:51:38 UTC; Jan
 Author: Jan Dix [cre],
-  Jana Blahak [aut]
+    Jana Blahak [aut]
 Maintainer: Jan Dix <jan.dix@uni-konstanz.de>
 URL: http://github.com/tollpatsch/rzeit
 BugReports: http://github.com/tollpatsch/rzeit/issues
+RoxygenNote: 5.0.1

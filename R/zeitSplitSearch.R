@@ -20,11 +20,13 @@ zeitSplitSearch <- function(base, url, begin, end, q){
   dateVector[length(dateVector) + 1] <- startDate %m+% months(1)
 
   i <- as.numeric(length(dateVector)) - 1
-
+  
+  pb <- txtProgressBar(min = 1, max = i, style = 3)
+  
   df <- data.frame(NULL)
 
   lsTest <- jsonlite::fromJSON(url)
-
+  
   if(lsTest$found < 1000){
 
     lsTest$searchURL <- url
@@ -50,15 +52,15 @@ zeitSplitSearch <- function(base, url, begin, end, q){
       y <- as.data.frame(y[1])
 
       # combine new and latter DataFrame
-      df <- rbind(df, y)
+      df <- plyr::rbind.fill(df, y)
 
       # system sleep
       Sys.sleep(0.5)
 
 
       i <- i - 1
+      setTxtProgressBar(pb, i)
     }
-
   }
 
   ls <- list(df)
