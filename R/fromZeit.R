@@ -1,11 +1,10 @@
 #'@title Connects to ZEIT Online API
 #'@description Exposes a search in the ZEIT online archive and returns results for the given query.
 #'@param api character. The personal api code. To request an API key see: \url{http://developer.zeit.de/quickstart/} This parameter is by default set to the R Environment.
-#'@param limit character. The number of results given back.limit should not exceed 1000.
 #'@param q character (vector). Search query term.
+#'@param limit integer. The number of results given back. If \code{limit} exceeds 1000 or is set to \code{"all"}, a comlete list of matches is returned (Attention: this can take quite a while, because after every query the system sleeps for one second).
 #'@param dateBegin character. Begin date - Restricts responses to results with publication dates of the date specified or later. In the form YYYY-MM-DD.
 #'@param dateEnd character. End date - Restricts responses to results with publication dates of the date specified or earlier. In the form YYYY-MM-DD.
-#'@param split logical. If \code{split = TRUE} the search is not performed within the whole date range, but splitted into monthly searches. This enables to exceed the limit of 1000 articles returned. Attention: this can take quite a while, because after every query the system sleeps for one second.
 #'@details \code{fromZeit.R} is the function, which interacts directly with the Zeit Online API. We only used the content endpoint for this package. There are further endpoints (eg. /author, /product) not included into this package to further specify the search if needed . The whole list of possible endpoints can be accessed here \url{http://developer.zeit.de/docs/}
 #'@details \code{fromZeit.R} is the function, which interacts directly with the ZEIT Online API. We only used the content endpoint for this package. There are further endpoints (e.g. /author, /product) not included into this package to further specify the search if needed. The whole list of possible endpoints can be accessed here \url{http://developer.zeit.de/docs/}.
 #'
@@ -41,6 +40,8 @@
 #'                          dateEnd = "2007-12-31")
 #'
 #' ## Example 2: Because the number of available articles exceeds the limit of 1000 we use \code{split = TRUE}, further we set the API Key in advance.
+#' ## Example 2: Because the number of available articles exceeds the limit of 1000 
+#' ## we use \code{limit = "all"}, further we set the API Key in advance.
 #'
 #'    options("zeitApiKey" = *set your personal API Key here*)
 #'
@@ -55,10 +56,9 @@
 
 fromZeit <- function(api = Sys.getenv("zeit_api_key"),
                      q,
-                     limit = "50",
+                     limit = 50,
                      dateBegin = "2004-01-01",
                      dateEnd = "2014-12-31",
-                     split = TRUE,
   # variables saving additionally in the list
   query <- q
 
@@ -87,8 +87,9 @@ fromZeit <- function(api = Sys.getenv("zeit_api_key"),
   url <- paste(base, dateQuery, "&limit=", limit,  sep = "")
 
 
-  if(split == TRUE){
+  if(limit == "all") limit = 1001
 
+  if(limit > 1000) {
     zeitSplitSearch(base = base,
                     url = url,
                     begin = dateBegin,
