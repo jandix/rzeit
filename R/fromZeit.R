@@ -1,16 +1,29 @@
 #'@title Connects to ZEIT Online API
 #'@description Exposes a search in the ZEIT online archive and returns results for the given query.
 #'@param api character. The personal api code. To request an API key see: \url{http://developer.zeit.de/quickstart/} This parameter is by default set to the R Environment.
-#'@param q character. Search query term. Search is performed on the article body, headline and byline.
 #'@param limit character. The number of results given back.limit should not exceed 1000.
+#'@param q character (vector). Search query term.
 #'@param dateBegin character. Begin date - Restricts responses to results with publication dates of the date specified or later. In the form YYYY-MM-DD.
 #'@param dateEnd character. End date - Restricts responses to results with publication dates of the date specified or earlier. In the form YYYY-MM-DD.
 #'@param split logical. If \code{split = TRUE} the search is not performed within the whole date range, but splitted into monthly searches. This enables to exceed the limit of 1000 articles returned. Attention: this can take quite a while, because after every query the system sleeps for one second.
-#'@param multipleTokens logical. Should be searched for multiple tokens?
 #'@details \code{fromZeit.R} is the function, which interacts directly with the Zeit Online API. We only used the content endpoint for this package. There are further endpoints (eg. /author, /product) not included into this package to further specify the search if needed . The whole list of possible endpoints can be accessed here \url{http://developer.zeit.de/docs/}
 #'@details \code{fromZeit.R} is the function, which interacts directly with the ZEIT Online API. We only used the content endpoint for this package. There are further endpoints (e.g. /author, /product) not included into this package to further specify the search if needed. The whole list of possible endpoints can be accessed here \url{http://developer.zeit.de/docs/}.
 #'
-#' If \code{multipleTokens = TRUE} the search query "Angela Merkel" returns all articles for both "Angela" and "Merkel", elsewise it returns results for the entire string ("Angela Merkel").
+#'\emph{Query building}
+#'
+#'By default the search is performed on the article body, headline and byline. Article fields can be queried individually by a combination of the field name and the search term, separated by a semicolon. Available query fields are "title", "subtitle", "supertitle", "teaser_text" and "teaser_title".
+#'Multiple tokens are possible using a vector of strings. Strings in a vector are "OR"-combined by default. Boolean operator can be changed to "AND" by starting a string with "+".
+#'\tabular{lll}{
+#'Query \tab Result \cr
+#'q="merkel" \tab articles containing "Merkel" in body, headline or byline \cr
+#'q="angela merkel" \tab articles containing "Angela Merkel" in body, headline and byline \cr
+#'q=c("angela", "merkel") \tab articles containing "Angela" or "Merkel" in article body, headline and byline \cr
+#'q=c("angela", "+merkel") \tab articles containing "Angela" and "Merkel" in article body, headline and byline \cr
+#'q="title:merkel" \tab articles containing "Merkel" in headline \cr
+#'q="title:angela merkel" \tab articles containing "Angela Merkel" in headline \cr
+#'q=c("title:merkel", "+subtitle:merkel") \tab articles containing "Merkel" in headline and byline \cr
+#'q=c("merkel", "+title:merkel", "+subtitle:merkel") \tab articles containing "Merkel" in article body, headline and byline
+#'}
 #'
 #'@seealso \code{\link{zeitSetApiKey}} \code{\link{zeitFrequencies}} \code{\link{zeitToDf}} \code{\link{zeitPlot}}
 #'@references \url{http://developer.zeit.de}
@@ -46,16 +59,24 @@ fromZeit <- function(api = Sys.getenv("zeit_api_key"),
                      dateBegin = "2004-01-01",
                      dateEnd = "2014-12-31",
                      split = TRUE,
-                     multipleTokens = FALSE){
   # variables saving additionally in the list
   query <- q
 
 
-  # removing whitespaces
-  if (multipleTokens == TRUE) {
-  q <- stringr::str_replace_all(q, "\\s", "\\+")
-  } else {
-    q <- stringr::str_replace_all(q, "\\s", "%20")
+  
+  # prepare query
+  q <- str_replace_all(q, "\\s", "%20") # replace whitespaces
+  q <- sapply(q, function(x) if(length(grep("%20", x, fixed=TRUE))!=0) paste0("%22", x, "%22") else paste(x)) # enclose multiple tokens with "
+  # correct fields
+  q <- str_replace_all(q, "%22subtitle:", "subtitle:%22")
+  q <- str_replace_all(q, "%22title:", "title:%22")
+  q <- str_replace_all(q, "%22supertitle:", "supertitle:%22")
+  q <- str_replace_all(q, "%22teaser_text:", "teaser_text:%22")
+  q <- str_replace_all(q, "%22teaser_title:", "teaser_title:%22")
+  # prepare multiple tokens and boolean operators
+  if(length(q) > 1) {
+  	q <- paste0(q, collapse="%20OR%20")
+		q <- gsub("%20OR%20+", "%20AND%20", q, fixed=TRUE)
   }
 
   # pasting release_date
