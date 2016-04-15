@@ -64,7 +64,8 @@ zeitSplitSearch <- function(base, url, begin, end, q, fields) {
     }
   }
 
-  ls <- list(df)
+  ls <- list(matches=df)
+  names(ls[["matches"]]) <- str_replace_all(names(ls[["matches"]]), "matches.", "")
   ls$returned <- nrow(df)
   ls$offset <- lsTest$offset
   ls$searchURL <- url
