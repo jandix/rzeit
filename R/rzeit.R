@@ -11,5 +11,12 @@
 #'\code{\link{zeitPlot}} to plot results of a search,
 #'\code{\link{zeitSetApiKey}} to set the API Key to the environment,
 #'\code{\link{zeitToDf}} to get a data frame with sorted articles
+#'@importFrom foreign write.foreign
+#'@importFrom foreign write.dta
+#'@importFrom jsonlite fromJSON
+#'@importFrom lubridate %m+%
+#'@importFrom plyr rbind.fill
+#'@importFrom stringr str_extract
+#'@importFrom stringr str_replace_all
 #'@aliases rzeit rzeit-package
 NULL

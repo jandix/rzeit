@@ -8,8 +8,8 @@ weeksort <- function(ls, save = FALSE, freq){
   # defining start and end date adding weekdays and count of weeks
   dateStart <- df$matches.release_date[1]
   dateEnd <- tail(df$matches.release_date, n = 1)
-  dateStart <- stringr::str_extract(dateStart, "\\d{4}-\\d{2}-\\d{2}")
-  dateEnd <- stringr::str_extract(dateEnd, "\\d{4}-\\d{2}-\\d{2}")
+  dateStart <- str_extract(dateStart, "\\d{4}-\\d{2}-\\d{2}")
+  dateEnd <- str_extract(dateEnd, "\\d{4}-\\d{2}-\\d{2}")
   dateStart <- as.Date(dateStart)
   dateEnd <- as.Date(dateEnd)
   while (weekdays(dateEnd) != "Sonntag"){
@@ -32,7 +32,7 @@ weeksort <- function(ls, save = FALSE, freq){
 
     while (j > 0){
       dateTest <- df$matches.release_date[j]
-      dateTest <- stringr::str_extract(dateTest, "\\d{4}-\\d{2}-\\d{2}")
+      dateTest <- str_extract(dateTest, "\\d{4}-\\d{2}-\\d{2}")
       dateTest <- as.Date(dateTest)
 
       if(dateTest >= dfFreqs$date[i] && dateTest <= dfFreqs$endWeek[i]){

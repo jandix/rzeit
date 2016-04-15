@@ -20,7 +20,7 @@
   
   df <- data.frame(NULL)
 
-  lsTest <- jsonlite::fromJSON(url)
+  lsTest <- fromJSON(url)
   
   if(lsTest$found < 1000){
 
@@ -41,13 +41,13 @@
       urlreturn <- c(urlreturn, x)
 
       # translate JSON into R Object
-      y <- jsonlite::fromJSON(x)
+      y <- fromJSON(x)
 
       # transform into DataFrame
       y <- as.data.frame(y[1])
 
       # combine new and latter DataFrame
-      df <- plyr::rbind.fill(df, y)
+      df <- rbind.fill(df, y)
 
       # system sleep
       Sys.sleep(0.5)

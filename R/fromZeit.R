@@ -78,7 +78,7 @@ fromZeit <- function(api = Sys.getenv("zeit_api_key"),
   else{
 
     # translate JSON into R Object
-    returnList <- jsonlite::fromJSON(url)
+    returnList <- fromJSON(url)
 
     # add variables from beginning
 
