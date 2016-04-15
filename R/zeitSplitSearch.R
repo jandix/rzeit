@@ -5,8 +5,10 @@
 #'@param begin Begin date - Restricts responses to results with publication dates of the date specified or later. In the form YYYY-MM-DD
 #'@param end End date - Restricts responses to results with publication dates of the date specified or earlier. In the form YYYY-MM-DD
 #'@param q query term as character
+#'@param fields selection of output fields as character
 #'@details \code{zeitSplitSearch} limits how many article are returend for each month, so that the search can cover a large timespan, even if one month originally contained an extremly large number of articles.
 
+zeitSplitSearch <- function(base, url, begin, end, q, fields) {
 
   urlreturn <- NULL
   dateVector <- seq.Date(from = as.Date(begin), to = as.Date(end), by = "month")
@@ -36,8 +38,12 @@
 
       #+release_date:[2013-01-01T00:00:00Z%20TO%202015-01-01T23:59:59.999Z]
 
-      x <- paste(base, replaceDate, "&limit=1000", sep = "")
 
+			if(is.null(fields)) {
+		  	x <- paste0(base, replaceDate, "&limit=1000")
+		  } else {
+		  	x <- paste0(base, replaceDate, "&fields=", fields, "&limit=1000")
+		  }
       urlreturn <- c(urlreturn, x)
 
       # translate JSON into R Object

@@ -5,7 +5,7 @@
 #'@param limit integer. The number of results given back. If \code{limit} exceeds 1000 or is set to \code{"all"}, a comlete list of matches is returned (Attention: this can take quite a while, because after every query the system sleeps for one second).
 #'@param dateBegin character. Begin date - Restricts responses to results with publication dates of the date specified or later. In the form YYYY-MM-DD.
 #'@param dateEnd character. End date - Restricts responses to results with publication dates of the date specified or earlier. In the form YYYY-MM-DD.
-#'@details \code{fromZeit.R} is the function, which interacts directly with the Zeit Online API. We only used the content endpoint for this package. There are further endpoints (eg. /author, /product) not included into this package to further specify the search if needed . The whole list of possible endpoints can be accessed here \url{http://developer.zeit.de/docs/}
+#'@param fields character (vector). Selection of output fields. Possible values are: \code{subtitle}, \code{uuid}, \code{title}, \code{href}, \code{release_date}, \code{uri}, \code{snippet}, \code{supertitle}, \code{teaser_text} and \code{teaser_title}.
 #'@details \code{fromZeit.R} is the function, which interacts directly with the ZEIT Online API. We only used the content endpoint for this package. There are further endpoints (e.g. /author, /product) not included into this package to further specify the search if needed. The whole list of possible endpoints can be accessed here \url{http://developer.zeit.de/docs/}.
 #'
 #'\emph{Query building}
@@ -59,6 +59,8 @@ fromZeit <- function(api = Sys.getenv("zeit_api_key"),
                      limit = 50,
                      dateBegin = "2004-01-01",
                      dateEnd = "2014-12-31",
+                     fields){
+  
   # variables saving additionally in the list
   query <- q
 
@@ -81,25 +83,34 @@ fromZeit <- function(api = Sys.getenv("zeit_api_key"),
 
   # pasting release_date
   dateQuery <- paste("+release_date:[", dateBegin, "T00:00:00Z%20TO%20", dateEnd, "T23:59:59.999Z]", sep = "")
+	# prepare fields
+  avail.fields <- c("subtitle", "uuid", "title", "href", "release_date", "uri", "snippet", "supertitle", "teaser_text", "teaser_title")
+  if (!missing(fields)) {
+		fields <- avail.fields[pmatch(fields, avail.fields)]
+		if(length(fields)>1) fields <- paste0(fields, collapse=",")
+	} else fields <- NULL
 
   # pasting the URL for API requirements
-  base <- paste("http://api.zeit.de/content", "?api_key=", api, "&q=", q,  sep = "")
-  url <- paste(base, dateQuery, "&limit=", limit,  sep = "")
-
-
   if(limit == "all") limit = 1001
+  base <- paste0("http://api.zeit.de/content", "?api_key=", api, "&q=", q)
+  if(is.null(fields)) {
+  	url <- paste0(base, dateQuery, "&limit=", limit)
+  } else {
+  	url <- paste0(base, dateQuery, "&fields=", fields, "&limit=", limit)
+  }
 
   if(limit > 1000) {
     zeitSplitSearch(base = base,
                     url = url,
                     begin = dateBegin,
                     end = dateEnd,
-                    q = query)
 
   }
 
   else{
 
+                    q = query,
+                    fields = fields)
     # translate JSON into R Object
     returnList <- fromJSON(url)
 
