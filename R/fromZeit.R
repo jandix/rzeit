@@ -29,25 +29,22 @@
 #'@return A list including articles and meta information about the query.
 #'@examples
 #'\dontrun{
+#' ## Example 1: simple query with the limit of 1000 returned articles 
+#' ## between 2002 and 2007, API Key is set manually.
 #'
-#' ## Example 1: simple query with the limit of 1000 returned articles between 2002 and 2007, API Key is set manually.
-#'
-#'    firstQuery <- fromZeit(api = *set your personal API Key here*,
-#'                          q = "Angela Merkel",
-#'                          split = FALSE,
-#'                          limit = "1000",
+#'    merkel <- fromZeit(api = *set your personal API Key here*,
+#'                          q = "angela merkel",
+#'                          limit = 1000,
 #'                          dateBegin = "2002-01-01",
 #'                          dateEnd = "2007-12-31")
 #'
-#' ## Example 2: Because the number of available articles exceeds the limit of 1000 we use \code{split = TRUE}, further we set the API Key in advance.
 #' ## Example 2: Because the number of available articles exceeds the limit of 1000 
 #' ## we use \code{limit = "all"}, further we set the API Key in advance.
 #'
 #'    options("zeitApiKey" = *set your personal API Key here*)
 #'
-#'    termsSplit <- fromZeit(q = "Angela Merkel",
-#'                          split = TRUE,
-#'                          limit = "1000",
+#'    merkel_all <- fromZeit(q = "angela merkel",
+#'                          limit = "all",
 #'                          dateBegin = "2002-01-01",
 #'                          dateEnd = "2007-12-31")
 #'}
