@@ -39,6 +39,7 @@ Further options are:
   }
 }
 \examples{
+\dontrun{
 ## Example 1: Returns a data frame, sorted by months and saved as .txt
 
    zeitFrequencies(terms, "month", save = TRUE)
@@ -48,6 +49,7 @@ Further options are:
    options("zeitSaveDf" = "sps")
 
    zeitFrequencies(terms, "day", save = TRUE)
+}
 }
 \author{
 Jan Dix, \email{jan.dix@uni-konstanz.de} Jana Blahak, \email{jana.blahak@uni-konstanz.de}

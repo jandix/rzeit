@@ -16,8 +16,10 @@ zeitSetApiKey(apiKey, path = paste(normalizePath("~/"), ".Renviron", sep =
 Function to set you API Key to the R environment when starting using \code{rzeit} package. Attention: You should only execute this functions once.
 }
 \examples{
+\dontrun{
      zeitSetApiKey(apiKey = "this_is_your_api_key",
                    path = "")
+}
 }
 \author{
 Jan Dix, \email{jan.dix@uni-konstanz.de} Jana Blahak, \email{jana.blahak@uni-konstanz.de}

@@ -16,6 +16,7 @@
 #'@references \url{http://developer.zeit.de}
 #'@return A list including articles and meta information about the query.
 #'@examples
+#'\dontrun{
 #'
 #' ## Example 1: simple query with the limit of 1000 returned articles between 2002 and 2007, API Key is set manually.
 #'
