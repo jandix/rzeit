@@ -1,7 +1,5 @@
-#'zeitPlot
-#'
-#'Function to plot the results of the data frames by frequencies and time automatically. Attention: Only works with the frequency data frames created by the internal function \code{\link{zeitSorting}} of the rzeit package.
-#'
+#'@title Plot results of API request
+#'@description Function to plot the results of the data frames by frequencies and time automatically. Attention: Only works with the frequency data frames created by the internal function \code{zeitSorting} of the \code{rzeit} package.
 #'@param df data frame. Data frame that is the basis for the graph.
 #'@param yTitle character. Labels the y-axis.
 #'@param xTitle character. Labels the x-axis.
@@ -13,9 +11,11 @@
 #'@seealso \code{\link{zeitSetApiKey}} \code{\link{fromZeit}} \code{\link{zeitFrequencies}} \code{\link{zeitToDf}}
 #'@return Plots a graph based on given data frame.
 #'@examples
-#'      zeitPlot(dfFrequenciesWeek, yTitle = "Week", xTitle = "Frequencies of articles")
-#' @author Jan Dix, \email{jan.dix@@uni-konstanz.de} Jana Blahak, \email{jana.blahak@@uni-konstanz.de}
-#' @export
+#'\dontrun{
+#'zeitPlot(dfFrequenciesWeek, yTitle = "Week", xTitle = "Frequencies of articles")
+#'}
+#'@author Jan Dix, \email{jan.dix@@uni-konstanz.de} Jana Blahak, \email{jana.blahak@@uni-konstanz.de}
+#'@export
 
 zeitPlot <- function(df, yTitle = "frequencies", xTitle = "time", title = NULL, grey = FALSE, absolute = TRUE, lowessFactor = 0.2){
 

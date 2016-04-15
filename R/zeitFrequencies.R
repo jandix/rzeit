@@ -1,7 +1,5 @@
-#' Returns a frequency table in choosen format
-#'
-#' The returned data frame includes a continous list of dates in choosen sequences and the related frequencies. The number of either day/week/month/year, are comparable to the data frame, created by \code{\link{zeitToDf}}.
-#'
+#'@title Returns a frequency table in choosen format
+#'@description The returned data frame includes a continous list of dates in choosen sequences and the related frequencies. The number of either day/week/month/year, are comparable to the data frame, created by \code{\link{zeitToDf}}.
 #'@param ls list. List which will be converted into the data frame. Attention: This function only works with the returned element of \code{\link{fromZeit}}.
 #'@param sort character. Specifies how the results are sorted
 #'possible options:

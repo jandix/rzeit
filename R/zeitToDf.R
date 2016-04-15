@@ -1,7 +1,5 @@
-#' Returns a data frame with sorted articles
-#'
-#' The data frame includes the articles, the related links and the number of either day/week/month/year, comparable to the data frame, created by \code{\link{zeitFrequencies}}.
-#'
+#'@title Returns a data frame with sorted articles
+#'@description The data frame includes the articles, the related links and the number of either day/week/month/year, comparable to the data frame, created by \code{\link{zeitFrequencies}}.
 #'@param ls list. List which will be converted into the data frame. Attention: This function only works with the returned element of \code{\link{fromZeit}}.
 #'@param sort character. Specifies how the results are sorted
 #'possible options:

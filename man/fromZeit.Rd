@@ -2,7 +2,7 @@
 % Please edit documentation in R/fromZeit.R
 \name{fromZeit}
 \alias{fromZeit}
-\title{Connects to Zeit Online Api}
+\title{Connects to ZEIT Online API}
 \usage{
 fromZeit(api = Sys.getenv("zeit_api_key"), q, limit = "50",
   dateBegin = "2004-01-01", dateEnd = "2014-12-31", split = TRUE,
@@ -27,10 +27,12 @@ fromZeit(api = Sys.getenv("zeit_api_key"), q, limit = "50",
 A list including articles and meta information about the query.
 }
 \description{
-Returns results for the given query.
+Exposes a search in the ZEIT online archive and returns results for the given query.
 }
 \details{
-\code{fromZeit.R} is the function, which interacts directly with the Zeit Online API. We only used the content endpoint for this package. There are further endpoints (eg. /author, /product) not included into this package to further specify the search if needed . The whole list of possible endpoints can be accessed here \url{http://developer.zeit.de/docs/}
+\code{fromZeit.R} is the function, which interacts directly with the ZEIT Online API. We only used the content endpoint for this package. There are further endpoints (e.g. /author, /product) not included into this package to further specify the search if needed. The whole list of possible endpoints can be accessed here \url{http://developer.zeit.de/docs/}.
+
+\emph{Query building}
 
 If \code{multipleTokens = TRUE} the search query "Angela Merkel" returns all articles for both "Angela" and "Merkel", elsewise it returns results for the entire string ("Angela Merkel").
 }
@@ -56,7 +58,7 @@ If \code{multipleTokens = TRUE} the search query "Angela Merkel" returns all art
                          dateEnd = "2007-12-31")
 }
 \author{
-Jan Dix, \email{jan.dix@uni-konstanz.de} Jana Blahak, \email{jana.blahak@uni-konstanz.de}
+Jan Dix, \email{jan.dix@uni-konstanz.de} Jana Blahak, \email{jana.blahak@uni-konstanz.de}  Christian Graul
 }
 \references{
 \url{http://developer.zeit.de}

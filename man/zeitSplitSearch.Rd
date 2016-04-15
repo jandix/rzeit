@@ -2,7 +2,7 @@
 % Please edit documentation in R/zeitSplitSearch.R
 \name{zeitSplitSearch}
 \alias{zeitSplitSearch}
-\title{zeitSplitSearch}
+\title{Split search request}
 \usage{
 zeitSplitSearch(base, url, begin, end, q)
 }

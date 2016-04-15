@@ -1,16 +1,12 @@
-#' zeitSplitSearch
-#'
-#' Allows to split the search in order to cover larger timespans.
-#'
-#' @param x url as character
-#' @param begin Begin date - Restricts responses to results with publication dates of the date specified or later. In the form YYYY-MM-DD
-#' @param end End date - Restricts responses to results with publication dates of the date specified or earlier. In the form YYYY-MM-DD
-#'
-#' @details \code{zeitSplitSearch} limits how many article are returend for each month, so that the search can cover a large timespan, even if one month originally contained an extremly large number of articles.
-#' @import lubridate
+#'@title Split search request
+#'@description Allows to split the search in order to cover larger timespans.
+#'@param base base url as character
+#'@param url as character
+#'@param begin Begin date - Restricts responses to results with publication dates of the date specified or later. In the form YYYY-MM-DD
+#'@param end End date - Restricts responses to results with publication dates of the date specified or earlier. In the form YYYY-MM-DD
+#'@param q query term as character
+#'@details \code{zeitSplitSearch} limits how many article are returend for each month, so that the search can cover a large timespan, even if one month originally contained an extremly large number of articles.
 
-
-zeitSplitSearch <- function(base, url, begin, end, q){
 
   urlreturn <- NULL
 
