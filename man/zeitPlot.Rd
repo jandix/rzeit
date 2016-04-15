@@ -32,7 +32,9 @@ Function to plot the results of the data frames by frequencies and time automati
 If the data frame includes less than 20 observations, no trend line is plotted. The dotted line indicates the mean of frequencies.
 }
 \examples{
-     zeitPlot(dfFrequenciesWeek, yTitle = "Week", xTitle = "Frequencies of articles")
+\dontrun{
+zeitPlot(dfFrequenciesWeek, yTitle = "Week", xTitle = "Frequencies of articles")
+}
 }
 \author{
 Jan Dix, \email{jan.dix@uni-konstanz.de} Jana Blahak, \email{jana.blahak@uni-konstanz.de}

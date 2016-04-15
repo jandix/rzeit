@@ -9,7 +9,6 @@
 
 
   urlreturn <- NULL
-
   dateVector <- seq.Date(from = as.Date(begin), to = as.Date(end), by = "month")
 
   startDate <- dateVector[length(dateVector)]

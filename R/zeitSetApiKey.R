@@ -4,8 +4,10 @@
 #'@param path character. Path where the enviornment is stored. Default is the normalized path.
 #'@seealso \code{\link{fromZeit}} \code{\link{zeitFrequencies}} \code{\link{zeitToDf}} \code{\link{zeitPlot}}
 #'@examples
+#'\dontrun{
 #'      zeitSetApiKey(apiKey = "this_is_your_api_key",
 #'                    path = "")
+#'}
 #'@author Jan Dix, \email{jan.dix@@uni-konstanz.de} Jana Blahak, \email{jana.blahak@@uni-konstanz.de}
 #'@export
 

@@ -11,7 +11,7 @@ Authors@R: c(person("Jan", "Dix",  role = c("cre"), email = "jan.dix@uni-konstan
 	person ("Christian", "Graul", role = c("ctb")))
 Depends:
     R (>= 3.2.0)
-License: MIT + file
+License: MIT + file LICENSE
 LazyData: TRUE
 VignetteBuilder: knitr
 Imports:

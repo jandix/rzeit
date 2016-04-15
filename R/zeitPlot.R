@@ -18,35 +18,35 @@
 #'@export
 
 zeitPlot <- function(df, yTitle = "frequencies", xTitle = "time", title = NULL, grey = FALSE, absolute = TRUE, lowessFactor = 0.2){
-
-  if (absolute == TRUE){
-    yAxis <- df$freq
+		
+	if (absolute == TRUE) {
+		yAxis <- df$freq
     yLimit <- c(0, max(yAxis) + 10)
-  } else{
-    yAxis <- df$freqPro
-    yLimit <- c(1, 100)
-  }
+	} else {
+		yAxis <- df$freqPro
+		yLimit <- c(1, 100)
+	}
 
-  if (grey == TRUE){
-    colBar <- "#C1C1C1"
-    colLine <- "#181818"
-    } else{
-      colBar <- "#d2691e"
-      colLine <- "#CD3333"
-    }
+  if (grey == TRUE) {
+		colBar <- "#C1C1C1"
+		colLine <- "#181818"
+	} else {
+		colBar <- "#d2691e"
+		colLine <- "#CD3333"
+	}
 
-    plot(df$date,
-         yAxis,
-         type = "h",
-         col  = colBar,
-         main = title,
-         ylab = yTitle,
-         xlab = xTitle,
-         ylim = yLimit)
-    abline(h = mean(yAxis), col = "black", lty = "dashed")
-    axis(4, at = round(mean(yAxis), digits = 2))
+	plot(df$date,
+       yAxis,
+       type = "h",
+       col  = colBar,
+       main = title,
+       ylab = yTitle,
+       xlab = xTitle,
+       ylim = yLimit)
+	abline(h = mean(yAxis), col = "black", lty = "dashed")
+	axis(4, at = round(mean(yAxis), digits = 2))
 
-    if (nrow(df) > 20){
-      lines(lowess(yAxis ~ df$date, f = lowessFactor), col = colLine, lwd = 2)
-    }
+	if (nrow(df) > 20) {
+		lines(lowess(yAxis ~ df$date, f = lowessFactor), col = colLine, lwd = 2)
+	}
 }
