@@ -1,8 +1,6 @@
 saveZeit <- function(df, path = getwd(), format = c("txt", "sps", "sas", "dta"), name = "zeit_df")
   {
 
-
-
   # nach http://www.statmethods.net/input/exportingdata.html
 
   # create directory if path does not exist

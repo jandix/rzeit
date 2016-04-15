@@ -60,8 +60,6 @@ fromZeit <- function(api = Sys.getenv("zeit_api_key"),
   
   # variables saving additionally in the list
   query <- q
-
-
   
   # prepare query
   q <- str_replace_all(q, "\\s", "%20") # replace whitespaces
@@ -79,7 +77,8 @@ fromZeit <- function(api = Sys.getenv("zeit_api_key"),
   }
 
   # pasting release_date
-  dateQuery <- paste("+release_date:[", dateBegin, "T00:00:00Z%20TO%20", dateEnd, "T23:59:59.999Z]", sep = "")
+  dateQuery <- paste0("%20AND%20release_date:[", dateBegin, "T00:00:00Z%20TO%20", dateEnd, "T23:59:59.999Z]")
+	
 	# prepare fields
   avail.fields <- c("subtitle", "uuid", "title", "href", "release_date", "uri", "snippet", "supertitle", "teaser_text", "teaser_title")
   if (!missing(fields)) {
@@ -101,24 +100,18 @@ fromZeit <- function(api = Sys.getenv("zeit_api_key"),
                     url = url,
                     begin = dateBegin,
                     end = dateEnd,
-
-  }
-
-  else{
-
                     q = query,
                     fields = fields)
+  } else {
     # translate JSON into R Object
     returnList <- fromJSON(url)
 
     # add variables from beginning
-
     url <- str_replace_all(url, "api_key=[A-Za-z0-9]*&q=", "api_key=APIKEYHIDDEN&q=") # hide key 
     returnList$searchURL <- url
     returnList$queryTerm <- query
 
     # return matches
     return(returnList)
-
   }
 }
