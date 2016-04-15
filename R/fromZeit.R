@@ -113,6 +113,7 @@ fromZeit <- function(api = Sys.getenv("zeit_api_key"),
 
     # add variables from beginning
 
+    url <- str_replace_all(url, "api_key=[A-Za-z0-9]*&q=", "api_key=APIKEYHIDDEN&q=") # hide key 
     returnList$searchURL <- url
     returnList$queryTerm <- query
 

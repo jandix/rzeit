@@ -37,6 +37,7 @@ zeitSplitSearch <- function(base, url, begin, end, q, fields) {
       replaceDate <- paste("+release_date:[", as.character(dateVector[i]), "T00:00:00Z%20TO%20", as.character(dateVector[i+1]-1), "T23:59:59.999Z]", sep = "")
 
       #+release_date:[2013-01-01T00:00:00Z%20TO%202015-01-01T23:59:59.999Z]
+		url <- str_replace_all(url, "api_key=[A-Za-z0-9]*&q=", "api_key=APIKEYHIDDEN&q=") # hide key
 
 
 			if(is.null(fields)) {
@@ -68,6 +69,7 @@ zeitSplitSearch <- function(base, url, begin, end, q, fields) {
   names(ls[["matches"]]) <- str_replace_all(names(ls[["matches"]]), "matches.", "")
   ls$returned <- nrow(df)
   ls$offset <- lsTest$offset
+  url <- str_replace_all(url, "api_key=[A-Za-z0-9]*&q=", "api_key=APIKEYHIDDEN&q=") # hide key
   ls$searchURL <- url
   ls$queryTerm <- q
 
