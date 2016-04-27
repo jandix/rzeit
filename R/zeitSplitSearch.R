@@ -14,9 +14,9 @@ zeitSplitSearch <- function(base, url, begin, end, q, fields) {
   dateVector <- seq.Date(from = as.Date(begin), to = as.Date(end), by = "month")
   startDate <- dateVector[length(dateVector)]
   dateVector[length(dateVector) + 1] <- startDate %m+% months(1)
-  i <- as.numeric(length(dateVector)) - 1
+  i.max <- i <- as.numeric(length(dateVector)) - 1
   
-  pb <- txtProgressBar(min = 1, max = i, style = 3)
+  pb <- txtProgressBar(min = 1, max = i.max, style = 3)
   
   df <- data.frame(NULL)
   lsTest <- fromJSON(url)
@@ -53,8 +53,9 @@ zeitSplitSearch <- function(base, url, begin, end, q, fields) {
       Sys.sleep(0.5)
 
       i <- i - 1
-      setTxtProgressBar(pb, i)
+      setTxtProgressBar(pb, i.max-i)
 		}
+		close(pb)
 	}
 
   ls <- list(matches=df)
