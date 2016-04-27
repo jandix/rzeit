@@ -1,5 +1,5 @@
 ---
-title: "Introductory Vignette for rzeit package"
+title: "Introductory Vignette for rzeit"
 author: "Jana Blahak & Jan Dix"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -8,18 +8,20 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-We are happy to introduce our freshly created [*rzeit* package](https://github.com/tollpatsch/rzeit). It connects to the [Content API](http://developer.zeit.de/index/) at [ZEIT Online](http://www.zeit.de/), a German newspaper website. In short, the package allows you to 
+This is an introductory vignette to the [`rzeit`](https://github.com/tollpatsch/rzeit) package. The package connects to the [Content API](http://developer.zeit.de/index/) and gives access to articles and corresponding metadata from the DIE ZEIT archive dating back to 1946 and from [ZEIT Online](http://www.zeit.de/). DIE ZEIT is the most widely read German weekly newspaper. The API can be used for free for non-commercial use cases. For the terms of use see http://developer.zeit.de/licence (German only at the moment).
+
+In short the package allows you to:
 
 - conduct an unfiltered search for articles,
 - use a variety of parameters to refine query fields, e.g. to specify content and time, and
 - easily inspect meta as well as article data.
 
-The package is made publicly available at [GitHub](https://github.com/tollpatsch/rzeit). In this blog post, we demonstrate basic features of the package. In a follow-up post, we will dig deeper into the matter and show how the package can be used to construct networks of popular German politicians.
+The package is made publicly available at [GitHub](https://github.com/tollpatsch/rzeit). In this vignette we demonstrate basic features of the package. In a second vignette, we will dig deeper into the matter and show how the package can be used to construct networks of popular German politicians.
     
 
 ## Setup
 
-Currently, the package is only available on GitHub. Using the *devtools* package, you can easily install it:
+Currently, the package is only available on GitHub. Using the `devtools` package, you can easily install it:
 
 ```{r install github, warning = FALSE, results = "hide", message = FALSE, eval = FALSE}
 devtools::install_github("tollpatsch/rzeit")
@@ -27,116 +29,98 @@ devtools::install_github("tollpatsch/rzeit")
 
 ```{r loading rzeit, warning = FALSE, results = "hide", message = FALSE, eval = TRUE}
 library(rzeit)
-```    
-
-In the following example, we also draw on additional, well-known packages:
-
-```{r loading required packages, warning = FALSE, error = FALSE, results = "hide", message = FALSE, eval=FALSE}
-library(stringr)
-library(jsonlite)
-library(lubridate)
-```    
-
+```
 
 
 ## Basic functions
 
 To be able to work with the API, we have to fetch an API key first. There is no sophisticated authentication process involved here--just go to the [developer page](http://developer.zeit.de/quickstart/) and sign up by providing your name and a valid email address.
 
-With `zeitSetApiKey`, we provide a comfortable function that stores the key in the *R* environment You only have to do this once; the next time *R* is launched this key is automatically available and fetched by the package's functions:
+With `zeitSetApiKey`, we provide a comfortable function that stores the key in the `R` environment You only have to do this once; the next time `R` is launched this key is automatically available and fetched by the package's functions:
 
 ```{r, setKey, warning = FALSE, message = FALSE, eval = FALSE}
 zeitSetApiKey(apiKey = "set_your_api_key_here")
 ```
 
-Next, we can start tapping the API. `fromZeit` represents the core function of the package. Again, because the API Key is stored in the environment, we do not have to pass the key explicitly (but still  could do so using the `api` argument). As an example, we collect articles that include "Angela Merkel" in the article body, headline or byline:
+Next, we can start tapping the API. `fromZeit` represents the core function of the package. Again, because the API Key is stored in the environment, we do not have to pass the key explicitly (but still  could do so using the `api` argument). As an example, we collect articles that include "Merkel" in the article body, headline or byline:
 
 ```{r first, eval = TRUE}
-results <- fromZeit(q = "Angela Merkel",
-                    limit = "100",
-                    dateBegin = "2015-06-01",
-                    dateEnd = "2015-08-01")
+merkel <- fromZeit(q = "Merkel",
+                   limit = 100,
+                   dateBegin = "2015-01-01",
+                   dateEnd = "2015-12-31")
 ```
 
-Note that for the ease of exposition, we limited the number of collected results to 100 here using the `limit` argument. The maximum limit per call is 1000. Further, we restricted the search to articles that were published in a time period of about four months.
+Note that for the ease of exposition, we limited the number of collected results to 100 here using the `limit` argument. The maximum limit per call is 1000. Further, we restricted the search to articles that were published in a time period of about one year.
 
 The `results` object is of class `list` and provides information about the articles found as well as the number of hits for a given period. To extract information about the latter, we can draw on the `zeitFrequencies` function, which takes the `results` object as main argument and returns a data frame that includes a continous list of dates in choosen sequences and the related frequencies:  
  
 ```{r second, eval = TRUE}
-freq <- zeitFrequencies(ls = results,
-                        sort = "days",
-                        save = FALSE) 
-head(freq)
+merkel_freq <- zeitFrequencies(ls = merkel,
+                               sort = "days",
+                               save = FALSE) 
+head(merkel_freq)
 ```
 
 Apart from these meta data, we can also process substantive article information. The function `zeitToDf` converts the list returned from `fromZeit` into a data frame:
 
 ```{r third, eval = TRUE}
-articles <- zeitToDf(ls = results,
-                          sort = "days",
-                          save = FALSE) 
-names(articles)
+merkel_articles <- zeitToDf(ls = merkel,
+                            sort = "days",
+                            save = FALSE) 
+names(merkel_articles)
 ```
 
 Finally, we offer the function `zeitPlot` that offers a first inspection of the collected time series. It plots date versus frequencies based on the frequency data frame returned by `zeitFrequencies`:
 
 ```{r fourth, eval = FALSE}
-zeitPlot(df = freq) 
+zeitPlot(df = merkel_freq) 
 ```
 
 
-## Example
+## Detailed example
 
 So much for the package's basic functionality. In the following, we marginally modify our running example to demonstrate additional features of the `fromZeit` function. 
 
 ### Perform queries
 
-Again, we are looking for articles on Angela Merkel. However, we now set the `fromZeit` argument `multipleTokens = TRUE`. The effect of this is that the API will return results both for "Angela" and "Merkel". There are more than 1000 hits in the given time span (covering all of 2013 and 2014), but given the limit of 1000, the function only returns the first thousand articles in descending order:
+Now we search for multiple strings, i.e. articles containing "Bundeskanzlerin" or "Angela Merkel", in her first legislative period as the German chancellor. Furthermore, we set `limit = "all"` to get a comlete list of articles:
 
-```{r withSplit, eval = FALSE}
-results_split <- fromZeit(q = "Angela Merkel",
-                                 limit = "1000",
-                                 dateBegin = "2013-01-01",
-                                 dateEnd = "2014-12-31",
-                                 multipleTokens = TRUE)
-
-results_split <- zeitFrequencies(ls = results_split,
-                                        sort = "month",
-                                        save = FALSE)
-                                
-frequencies_split <- results_split
+```{r multiString1, results = "hide", eval = FALSE}
+merkel_1 <- fromZeit(q = c("Bundeskanzlerin", "Angela Merkel"),
+                     limit = "all",
+                     dateBegin = "2005-11-22",
+                     dateEnd = "2009-10-27")
 ```
 
-For the second run, we set `multipleTokens = FALSE`. The API will return results for the entire string "Angela Merkel". Furthermore, we set `limit = "1000"` and `split = FALSE`. The default value for the `split` argument is `TRUE`, which allows us to circumvent the technical limit of 1000 articles per query for the whole time span, as the search is now split into monthly searches. It is unlikely that there are more than 1000 articles on Angela Merkel per month, so we expect to capture all relevant articles in the given time period. If we set `split = FALSE`, however, only the most recent 1000 hits (as defined with the `limit` argument) are returned:
+For the second run we add a "+" to the (second) search term, to force a search for articles containing both, "Bundeskanzlerin" *and* "Angela Merkel":
 
-```{r withoutSplit, eval = FALSE}
-results_withoutsplit <- fromZeit(q = "Angela Merkel",
-                          split = FALSE,
-                          limit = "1000",
-                          dateBegin = "2013-01-01",
-                          dateEnd = "2014-12-31",
-                          multipleTokens = FALSE)
+```{r multiString2, results = "hide", eval = FALSE}
+merkel_2 <- fromZeit(q = c("Bundeskanzlerin", "+Angela Merkel"),
+                     limit = "all",
+                     dateBegin = "2005-11-22",
+                     dateEnd = "2009-10-27")
+```
 
-results_withoutsplit <- zeitFrequencies(ls = results_withoutsplit,
+Finally we are looking for articles on the exact term "Bundeskanzlerin Angela Merkel":
+
+```{r multiString3, results = "hide", eval = TRUE}
+merkel_3 <- fromZeit(q = "Bundeskanzlerin Angela Merkel",
+                     limit = "all",
+                     dateBegin = "2005-11-22",
+                     dateEnd = "2009-10-27")
+
+merkel_3_freq <- zeitFrequencies(ls = merkel_3,
                                  sort = "month",
                                  save = FALSE)
-                                
-frequencies_withoutsplit <- results_withoutsplit
 ```
 
 ### Plot results
 
-Lastly, we plot the results of the examples next to each other:
+Lastly, we plot the results of the last request:
 
-```{r, fig.show = "hold", eval = FALSE}
-par(mfrow=c(1, 2))
-zeitPlot(frequencies_withoutsplit, title = "without split", absolute = FALSE)
-zeitPlot(frequencies_split, title = "with split", absolute = FALSE)
+```{r, eval = TRUE, fig.width = 7.2, fig.height = 5}
+par(mfrow = c(1, 2))
+zeitPlot(merkel_3_freq, title = "Absolute Frequencies")
+zeitPlot(merkel_3_freq, title = "Relative Frequencies", absolute = FALSE)
 ```
-![plot of total_instructional_vignette](./figure/total_instructional_vignette.png) 
-
-We see that using the second call with `split = FALSE`, we gathered data between February and December 2014, although we originally specified a longer time span. This is due to the limit of 1000 returned hits per call. This can still be of use, however, if you are primarily interested in a limited number of hits that do not necessarily have to cover the enire time span. Using the first call, we retrieved data for the entire time period. Now we see a peak in attention of articles published on ZEIT Online in the second half of 2013--just about when Mrs. Merkel was running for here third chancellorship at the federal election that took place on September 22, 2013.
-
-
-
-
