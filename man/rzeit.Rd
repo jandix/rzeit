@@ -6,8 +6,8 @@
 \alias{rzeit-package}
 \title{Client for the ZEIT ONLINE Content API}
 \description{
-Interface to gather newspaper articles from ZEIT ONLINE, based on a 
-multilevel query. Including sorting algorithms and graphical output options.
+Interface to gather newspaper articles from DIE ZEIT and ZEIT ONLINE,
+based on a multilevel query. Including sorting algorithms and graphical output options.
 A personal API key is required for usage.
 }
 \references{
