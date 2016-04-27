@@ -4,7 +4,7 @@
 \alias{zeitSplitSearch}
 \title{Split search request}
 \usage{
-zeitSplitSearch(base, url, begin, end, q)
+zeitSplitSearch(base, url, begin, end, q, fields)
 }
 \arguments{
 \item{base}{base url as character}
@@ -16,6 +16,8 @@ zeitSplitSearch(base, url, begin, end, q)
 \item{end}{End date - Restricts responses to results with publication dates of the date specified or earlier. In the form YYYY-MM-DD}
 
 \item{q}{query term as character}
+
+\item{fields}{selection of output fields as character}
 }
 \description{
 Allows to split the search in order to cover larger timespans.
