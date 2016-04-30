@@ -9,18 +9,15 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The question we ask is the following: Can we use information from newspaper articles to learn about connections between political actors? As actors, we choose members of Angela Merkel's cabinet---ZEIT Online is a German newspaper website, so they are particularly strong in reporting about German politics. We assume that if pairs of ministers are mentioned in the same article, this represents some form of connectivity between those politicians and/or their departments. Given this inofmration, we might even learn about the centrality or importance of particular ministries within the government. To do so, we will use basic tools for network visualization.
+The question we ask in this vignette is the following: Can we use information from newspaper articles to learn about connections between political actors? As actors, we choose members of Angela Merkel's cabinet. DIE ZEIT as a German newspaper and ZEIT Online are particularly strong in reporting about German politics. We assume that if pairs of ministers are mentioned in the same article, this represents some form of connectivity between those politicians and/or their departments. Given this information, we might even learn about the centrality or importance of particular ministries within the government. To do so, we will use basic tools for network visualization.
 
 
 ## Loading packages
 
-We start with load all required packages, including our `rzeit` package (available from [Github](https://github.com/tollpatsch/rzeit)):
+We start with loading all required packages, including our `rzeit` package:
 
 ```{r basicconsole, warning = FALSE, results = "hide", message = FALSE}
 library(rzeit)
-library(stringr)
-library(jsonlite)
-library(lubridate)
 library(rvest)
 library(plyr)
 library(networkD3)
@@ -41,10 +38,8 @@ government_parsed <- html(government_url, encoding = "UTF8")
 government_tables <- html_table(government_parsed)
 government_df <- government_tables[[1]]
 
-government_df <- rename(government_df,
-                        c("Amtsinhaber" = "name"))
-government_df <- rename(government_df,
-                        c("Partei" = "party"))
+government_df <- rename(government_df, c("Amtsinhaber" = "name"))
+government_df <- rename(government_df, c("Partei" = "party"))
 
 
 government_df$name <- as.character(government_df$name)
@@ -121,9 +116,7 @@ head(count_df)
 
 Now R is prepared to perform the actual queries. For each query, we paste together a pair of names from the `count_df` data frame. When executing the query with `fromZeit`, we specify `limit = 1` because we are only interested in the numbers found in the respective period, and restrict results to the current government period:
 
-```{r Perform queries, eval = FALSE}
-zeitSetApiKey("set_your_api_key_here")
-
+```{r Perform queries, eval = TRUE}
 count_df$count <- 0
 i <- 1
 
@@ -131,7 +124,7 @@ while (i <= nrow(count_df)){
   query = paste(count_df$from[i], 
                 count_df$to[i], sep = " ")
   articles <- fromZeit(q = query, 
-                       limit = "1", 
+                       limit = 1, 
                        dateBegin = "2014-01-01", 
                        dateEnd = "2015-08-10")
   count_df$count[i] <- count_df$count[i] + as.numeric(articles$found)
@@ -142,7 +135,7 @@ while (i <= nrow(count_df)){
 
 Next, we construct a variable `mentioned` that counts the number of articles in which the name of a government member is mentioned:
 
-```{r Counting, eval = FALSE}
+```{r Counting, eval = TRUE}
 i <- 1
 government_df$mentioned <- 0
 
@@ -176,23 +169,19 @@ while (i <= nrow(government_df)){
 
 For aesthetic reasons, we rescale the `mentioned` variable:
 
-```{r corrections 1, eval = FALSE}
+```{r corrections 1, eval = TRUE}
 government_df$mentioned <- round(government_df$mentioned / max(government_df$mentioned) * 500)
 ```
 
 Now, we are ready to visualize the connections.
 
-```{r loading data sets, echo = FALSE}
-load("df/count_df.Rda")
-load("df/government_df.Rda")
-```
 
 ## Plotting the network
 
 Before we plot the network, we restrict the sample of `count_df` to those connections that appear more than 10 times, which eases interpretation of the network graph.
 
 ```{r corrections 2}
-sample <- count_df[count_df$count > 10, ]
+sample <- count_df[count_df$count > 10,]
 ```
 
 Lastly, we visualize the network using the `forceNetwork` function from the fabulous `networkD3` package. The number of shared articles define the strength of the edges. The node size is defined by total numbers of mentions. What do we find? Rather unsurprisingly, Angela Merkel as well as her 'most important' ministers Sigmar Gabriel (economy and energy), Frank-Walter Steinmeier (foreign affairs), and Wolfgang Schäuble (finance) are mentioned most often in the articles and hold strong connections to the chancellor. Other ministers like Manuela Schwesig (family) and Heiko Maas (justice) also received decent coverage, but apparently on isolated topics---they do not show strong links to other departments. Finally, we also find that some ministers are fairly isolated, e.g., Johanna Wanka (education and research), Gerd Müller (economic cooperation and development) and Herrmann Gröhe (health). It has to be subject of further analyses to investigate whether this is due to the lack of overlap between their and others' policies or because Merkel has decided to use her policy-making power to focus on issues other than health, education or development. 
@@ -200,7 +189,7 @@ Lastly, we visualize the network using the `forceNetwork` function from the fabu
 Feel free to play around a bit with the interactive network plot to develop your own theories of department collaboration in the German government!
 
 ```{r Plot network}
-sample <- count_df[count_df$count > mean(count_df$count), ]
+sample <- count_df[count_df$count > mean(count_df$count),]
 
 forceNetwork(Links = sample,
              Nodes = government_df,
@@ -219,6 +208,6 @@ forceNetwork(Links = sample,
              colourScale = 
              JS('d3.scale.ordinal()
                 .domain(["SPD", "CSU","CDU"])
-                .range(["#e1001a", "#007dbd" , "#e95d0f"]);'),)
+                .range(["#e1001a", "#007dbd" , "#e95d0f"]);'))
 
 ```

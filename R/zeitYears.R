@@ -8,8 +8,8 @@ yearsort <- function(ls, save = FALSE, freq){
   # defining start and end date adding weekdays and count of weeks
   dateStart <- df$matches.release_date[1]
   dateEnd <- tail(df$matches.release_date, n = 1)
-  dateStart <- stringr::str_extract(dateStart, "\\d{4}-\\d{2}-\\d{2}")
-  dateEnd <- stringr::str_extract(dateEnd, "\\d{4}-\\d{2}-\\d{2}")
+  dateStart <- str_extract(dateStart, "\\d{4}-\\d{2}-\\d{2}")
+  dateEnd <- str_extract(dateEnd, "\\d{4}-\\d{2}-\\d{2}")
   dateStart <- as.Date(dateStart)
   dateEnd <- as.Date(dateEnd)
 
@@ -32,7 +32,7 @@ yearsort <- function(ls, save = FALSE, freq){
 
     while (j > 0){
       date <- df$matches.release_date[j]
-      date <- stringr::str_extract(date, "\\d{4}-\\d{2}-\\d{2}")
+      date <- str_extract(date, "\\d{4}-\\d{2}-\\d{2}")
       date <- as.Date(date)
       date <- format(date, "%Y")
 

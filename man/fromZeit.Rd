@@ -2,61 +2,73 @@
 % Please edit documentation in R/fromZeit.R
 \name{fromZeit}
 \alias{fromZeit}
-\title{Connects to Zeit Online Api}
+\title{Connects to ZEIT Online API}
 \usage{
-fromZeit(api = Sys.getenv("zeit_api_key"), q, limit = "50",
-  dateBegin = "2004-01-01", dateEnd = "2014-12-31", split = TRUE,
-  multipleTokens = FALSE)
+fromZeit(api = Sys.getenv("zeit_api_key"), q, limit = 50,
+  dateBegin = "2004-01-01", dateEnd = "2014-12-31", fields)
 }
 \arguments{
 \item{api}{character. The personal api code. To request an API key see: \url{http://developer.zeit.de/quickstart/} This parameter is by default set to the R Environment.}
 
-\item{q}{character. Search query term. Search is performed on the article body, headline and byline.}
+\item{q}{character (vector). Search query term.}
 
-\item{limit}{character. The number of results given back.limit should not exceed 1000.}
+\item{limit}{integer. The number of results given back. If \code{limit} exceeds 1000 or is set to \code{"all"}, a comlete list of matches is returned (Attention: this can take quite a while, because after every query the system sleeps for one second).}
 
 \item{dateBegin}{character. Begin date - Restricts responses to results with publication dates of the date specified or later. In the form YYYY-MM-DD.}
 
 \item{dateEnd}{character. End date - Restricts responses to results with publication dates of the date specified or earlier. In the form YYYY-MM-DD.}
 
-\item{split}{logical. If \code{split = TRUE} the search is not performed within the whole date range, but splitted into monthly searches. This enables to exceed the limit of 1000 articles returned. Attention: this can take quite a while, because after every query the system sleeps for one second.}
-
-\item{multipleTokens}{logical. Should be searched for multiple tokens?}
+\item{fields}{character (vector). Selection of output fields. Possible values are: \code{subtitle}, \code{uuid}, \code{title}, \code{href}, \code{release_date}, \code{uri}, \code{snippet}, \code{supertitle}, \code{teaser_text} and \code{teaser_title}.}
 }
 \value{
 A list including articles and meta information about the query.
 }
 \description{
-Returns results for the given query.
+Exposes a search in the ZEIT online archive and returns results for the given query.
 }
 \details{
-\code{fromZeit.R} is the function, which interacts directly with the Zeit Online API. We only used the content endpoint for this package. There are further endpoints (eg. /author, /product) not included into this package to further specify the search if needed . The whole list of possible endpoints can be accessed here \url{http://developer.zeit.de/docs/}
+\code{fromZeit.R} is the function, which interacts directly with the ZEIT Online API. We only used the content endpoint for this package. There are further endpoints (e.g. /author, /product) not included into this package to further specify the search if needed. The whole list of possible endpoints can be accessed here \url{http://developer.zeit.de/docs/}.
 
-If \code{multipleTokens = TRUE} the search query "Angela Merkel" returns all articles for both "Angela" and "Merkel", elsewise it returns results for the entire string ("Angela Merkel").
+\emph{Query building}
+
+By default the search is performed on the article body, headline and byline. Article fields can be queried individually by a combination of the field name and the search term, separated by a semicolon. Available query fields are "title", "subtitle", "supertitle", "teaser_text" and "teaser_title".
+Multiple tokens are possible using a vector of strings. Strings in a vector are "OR"-combined by default. Boolean operator can be changed to "AND" by starting a string with "+".
+\tabular{lll}{
+Query \tab Result \cr
+q="merkel" \tab articles containing "Merkel" in body, headline or byline \cr
+q="angela merkel" \tab articles containing "Angela Merkel" in body, headline and byline \cr
+q=c("angela", "merkel") \tab articles containing "Angela" or "Merkel" in article body, headline and byline \cr
+q=c("angela", "+merkel") \tab articles containing "Angela" and "Merkel" in article body, headline and byline \cr
+q="title:merkel" \tab articles containing "Merkel" in headline \cr
+q="title:angela merkel" \tab articles containing "Angela Merkel" in headline \cr
+q=c("title:merkel", "+subtitle:merkel") \tab articles containing "Merkel" in headline and byline \cr
+q=c("merkel", "+title:merkel", "+subtitle:merkel") \tab articles containing "Merkel" in article body, headline and byline
+}
 }
 \examples{
+\dontrun{
+## Example 1: simple query with the limit of 1000 returned articles 
+## between 2002 and 2007, API Key is set manually.
 
-## Example 1: simple query with the limit of 1000 returned articles between 2002 and 2007, API Key is set manually.
-
-   firstQuery <- fromZeit(api = *set your personal API Key here*,
-                         q = "Angela Merkel",
-                         split = FALSE,
-                         limit = "1000",
+   merkel <- fromZeit(api = *set your personal API Key here*,
+                         q = "angela merkel",
+                         limit = 1000,
                          dateBegin = "2002-01-01",
                          dateEnd = "2007-12-31")
 
-## Example 2: Because the number of available articles exceeds the limit of 1000 we use \\code{split = TRUE}, further we set the API Key in advance.
+## Example 2: Because the number of available articles exceeds the limit of 1000 
+## we use \\code{limit = "all"}, further we set the API Key in advance.
 
    options("zeitApiKey" = *set your personal API Key here*)
 
-   termsSplit <- fromZeit(q = "Angela Merkel",
-                         split = TRUE,
-                         limit = "1000",
+   merkel_all <- fromZeit(q = "angela merkel",
+                         limit = "all",
                          dateBegin = "2002-01-01",
                          dateEnd = "2007-12-31")
 }
+}
 \author{
-Jan Dix, \email{jan.dix@uni-konstanz.de} Jana Blahak, \email{jana.blahak@uni-konstanz.de}
+Jan Dix, \email{jan.dix@uni-konstanz.de} Jana Blahak, \email{jana.blahak@uni-konstanz.de}  Christian Graul
 }
 \references{
 \url{http://developer.zeit.de}

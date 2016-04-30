@@ -1,7 +1,5 @@
-#' Returns a data frame with sorted articles
-#'
-#' The data frame includes the articles, the related links and the number of either day/week/month/year, comparable to the data frame, created by \code{\link{zeitFrequencies}}.
-#'
+#'@title Returns a data frame with sorted articles
+#'@description The data frame includes the articles, the related links and the number of either day/week/month/year, comparable to the data frame, created by \code{\link{zeitFrequencies}}.
 #'@param ls list. List which will be converted into the data frame. Attention: This function only works with the returned element of \code{\link{fromZeit}}.
 #'@param sort character. Specifies how the results are sorted
 #'possible options:
@@ -24,6 +22,7 @@
 #'@seealso \code{\link{zeitSetApiKey}} \code{\link{fromZeit}} \code{\link{zeitFrequencies}} \code{\link{zeitPlot}}
 #'@return data frame
 #'@examples
+#'\dontrun{
 #' ## Example 1: Returns a list with two data frames, sorted by months and saved as .txt
 #'
 #'    zeitToDf(terms, "month", save = TRUE)
@@ -33,10 +32,14 @@
 #'    options("zeitSaveDf" = "sps")
 #'
 #'    zeitToDf(terms, "day", save = TRUE)
+#'}
 #'@author Jan Dix, \email{jan.dix@@uni-konstanz.de} Jana Blahak, \email{jana.blahak@@uni-konstanz.de}
 #' @export
 zeitToDf <- function(ls, sort = c("years", "months", "weeks", "days", "single"), save = FALSE){
-
+	
+	# check ls
+	if(is.null(ls[["matches"]][["release_date"]])) stop("Field 'release_date' is required to use 'zeitToDf' but missing")
+	
   df <- as.data.frame(ls[1])
 
   ### switch between answers

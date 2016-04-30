@@ -1,7 +1,5 @@
-#' Returns a frequency table in choosen format
-#'
-#' The returned data frame includes a continous list of dates in choosen sequences and the related frequencies. The number of either day/week/month/year, are comparable to the data frame, created by \code{\link{zeitToDf}}.
-#'
+#'@title Returns a frequency table in choosen format
+#'@description The returned data frame includes a continous list of dates in choosen sequences and the related frequencies. The number of either day/week/month/year, are comparable to the data frame, created by \code{\link{zeitToDf}}.
 #'@param ls list. List which will be converted into the data frame. Attention: This function only works with the returned element of \code{\link{fromZeit}}.
 #'@param sort character. Specifies how the results are sorted
 #'possible options:
@@ -24,6 +22,7 @@
 #'@seealso \code{\link{zeitSetApiKey}} \code{\link{fromZeit}} \code{\link{zeitToDf}} \code{\link{zeitPlot}}
 #'@return data frame
 #'@examples
+#'\dontrun{
 #' ## Example 1: Returns a data frame, sorted by months and saved as .txt
 #'
 #'    zeitFrequencies(terms, "month", save = TRUE)
@@ -33,11 +32,15 @@
 #'    options("zeitSaveDf" = "sps")
 #'
 #'    zeitFrequencies(terms, "day", save = TRUE)
+#'}
 #'@author Jan Dix, \email{jan.dix@@uni-konstanz.de} Jana Blahak, \email{jana.blahak@@uni-konstanz.de}
 #'@export
 
 zeitFrequencies <- function(ls, sort = c("years", "months", "weeks", "days", "single"), save = FALSE){
-
+	
+	# check ls
+	if(is.null(ls[["matches"]][["release_date"]])) stop("Field 'release_date' is required to use 'zeitFrequencies' but missing")
+	
   df <- as.data.frame(ls[1])
 
   ### switch between answers

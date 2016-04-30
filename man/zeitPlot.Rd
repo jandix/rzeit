@@ -2,7 +2,7 @@
 % Please edit documentation in R/zeitPlot.R
 \name{zeitPlot}
 \alias{zeitPlot}
-\title{zeitPlot}
+\title{Plot results of API request}
 \usage{
 zeitPlot(df, yTitle = "frequencies", xTitle = "time", title = NULL,
   grey = FALSE, absolute = TRUE, lowessFactor = 0.2)
@@ -26,13 +26,15 @@ zeitPlot(df, yTitle = "frequencies", xTitle = "time", title = NULL,
 Plots a graph based on given data frame.
 }
 \description{
-Function to plot the results of the data frames by frequencies and time automatically. Attention: Only works with the frequency data frames created by the internal function \code{\link{zeitSorting}} of the rzeit package.
+Function to plot the results of the data frames by frequencies and time automatically. Attention: Only works with the frequency data frames created by the internal function \code{zeitSorting} of the \code{rzeit} package.
 }
 \details{
 If the data frame includes less than 20 observations, no trend line is plotted. The dotted line indicates the mean of frequencies.
 }
 \examples{
-     zeitPlot(dfFrequenciesWeek, yTitle = "Week", xTitle = "Frequencies of articles")
+\dontrun{
+zeitPlot(dfFrequenciesWeek, yTitle = "Week", xTitle = "Frequencies of articles")
+}
 }
 \author{
 Jan Dix, \email{jan.dix@uni-konstanz.de} Jana Blahak, \email{jana.blahak@uni-konstanz.de}
