@@ -4,8 +4,9 @@
 #'@param yTitle character. Labels the y-axis.
 #'@param xTitle character. Labels the x-axis.
 #'@param title character. Title of the graph.
-#'@param grey logical. Indicates if print grey or in colored.
-#'@param absolute logical. Indicates if absolute or relative frequencies are plotted on the y-axis.
+#'@param absolute logical (default is \code{TRUE}). Indicates if absolute or relative frequencies are plotted on the y-axis.
+#'@param trend logical (default is \code{TRUE}). Indicates if a trend line is plotted (only for 20 observations and above).
+#'@param mean logical (default is \code{TRUE}). Indicates if a horizontal mean line is plotted.
 #'@param lowessFactor numeric. "This gives the proportion of points in the plot which influence the smooth at each value. Larger values give more smoothness." For more details see \code{\link[stats]{lowess}}
 #'@details If the data frame includes less than 20 observations, no trend line is plotted. The dotted line indicates the mean of frequencies.
 #'@seealso \code{\link{zeitSetApiKey}} \code{\link{fromZeit}} \code{\link{zeitFrequencies}} \code{\link{zeitToDf}}
@@ -17,7 +18,7 @@
 #'@author Jan Dix, \email{jan.dix@@uni-konstanz.de} Jana Blahak, \email{jana.blahak@@uni-konstanz.de}
 #'@export
 
-zeitPlot <- function(df, yTitle = "frequencies", xTitle = "time", title = NULL, grey = FALSE, absolute = TRUE, lowessFactor = 0.2){
+zeitPlot <- function(df, yTitle = "frequencies", xTitle = "time", title = NULL, absolute = TRUE, trend = TRUE, mean = TRUE, lowessFactor = 0.2, ...){
 		
 	if (absolute == TRUE) {
 		yAxis <- df$freq
@@ -43,10 +44,10 @@ zeitPlot <- function(df, yTitle = "frequencies", xTitle = "time", title = NULL, 
        ylab = yTitle,
        xlab = xTitle,
        ylim = yLimit)
-	abline(h = mean(yAxis), col = "black", lty = "dashed")
-	axis(4, at = round(mean(yAxis), digits = 2))
+	if (mean) {
+	}
 
-	if (nrow(df) > 20) {
 		lines(lowess(yAxis ~ df$date, f = lowessFactor), col = colLine, lwd = 2)
+	if (trend && nrow(df) > 20) {
 	}
 }

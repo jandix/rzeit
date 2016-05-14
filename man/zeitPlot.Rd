@@ -5,7 +5,7 @@
 \title{Plot results of API request}
 \usage{
 zeitPlot(df, yTitle = "frequencies", xTitle = "time", title = NULL,
-  grey = FALSE, absolute = TRUE, lowessFactor = 0.2)
+  absolute = TRUE, trend = TRUE, mean = TRUE, lowessFactor = 0.2, ...)
 }
 \arguments{
 \item{df}{data frame. Data frame that is the basis for the graph.}
@@ -16,9 +16,11 @@ zeitPlot(df, yTitle = "frequencies", xTitle = "time", title = NULL,
 
 \item{title}{character. Title of the graph.}
 
-\item{grey}{logical. Indicates if print grey or in colored.}
+\item{absolute}{logical (default is \code{TRUE}). Indicates if absolute or relative frequencies are plotted on the y-axis.}
 
-\item{absolute}{logical. Indicates if absolute or relative frequencies are plotted on the y-axis.}
+\item{trend}{logical (default is \code{TRUE}). Indicates if a trend line is plotted (only for 20 observations and above).}
+
+\item{mean}{logical (default is \code{TRUE}). Indicates if a horizontal mean line is plotted.}
 
 \item{lowessFactor}{numeric. "This gives the proportion of points in the plot which influence the smooth at each value. Larger values give more smoothness." For more details see \code{\link[stats]{lowess}}}
 }
