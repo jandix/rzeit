@@ -39,15 +39,15 @@ If the data frame includes less than 20 observations, no trend line is plotted. 
 
 The following graphical parameters can optionally be added to customize the plot:
 \itemize{
-\item \code{col.bar}: The color to be used for bars. See \link{\code{par}} for usage.
-\item \code{lwd.bar}: The bar width. See \link{\code{par}} for usage.
-\item \code{lty.bar}: The bar line type. See \link{\code{par}} for usage.
-\item \code{col.trend}: The color to be used for the trend line. See \link{\code{par}} for usage.
-\item \code{lwd.trend}: The trend line width. See \link{\code{par}} for usage.
-\item \code{lty.trend}: The trend line type. See \link{\code{par}} for usage.
-\item \code{col.mean}: The color to be used for the mean line. See \link{\code{par}} for usage.
-\item \code{lwd.mean}: The mean line width. See \link{\code{par}} for usage.
-\item \code{lty.mean}: The mean line type. See \link{\code{par}} for usage.
+\item \code{col.bar}: The color to be used for bars. See \code{\link{par}} for usage.
+\item \code{lwd.bar}: The bar width. See \code{\link{par}} for usage.
+\item \code{lty.bar}: The bar line type. See \code{\link{par}} for usage.
+\item \code{col.trend}: The color to be used for the trend line. See \code{\link{par}} for usage.
+\item \code{lwd.trend}: The trend line width. See \code{\link{par}} for usage.
+\item \code{lty.trend}: The trend line type. See \code{\link{par}} for usage.
+\item \code{col.mean}: The color to be used for the mean line. See \code{\link{par}} for usage.
+\item \code{lwd.mean}: The mean line width. See \code{\link{par}} for usage.
+\item \code{lty.mean}: The mean line type. See \code{\link{par}} for usage.
 \item \code{col.axis}: The color to be used for axis annotation. Defaults to \code{"black"}.
 \item \code{col.lab}: The color to be used for x and y labels. Defaults to \code{"black"}.
 \item \code{col.main}: The color to be used for plot main titles. Defaults to \code{"black"}.
@@ -55,9 +55,9 @@ The following graphical parameters can optionally be added to customize the plot
 \item \code{cex.axis}: The magnification to be used for axis annotation relative to the current setting of \code{cex}.
 \item \code{cex.lab}: The magnification to be used for x and y labels relative to the current setting of \code{cex}.
 \item \code{cex.main}: The magnification to be used for main titles relative to the current setting of \code{cex}.
-\item \code{las}: The style of axis labels. See \link{\code{par}} for usage.
-\item \code{bty}: A character string which determined the type of box which is drawn about plots. See \link{\code{par}} for usage.
-\item \code{lend}: The line end style. See \link{\code{par}} for usage.
+\item \code{las}: The style of axis labels. See \code{\link{par}} for usage.
+\item \code{bty}: A character string which determined the type of box which is drawn about plots. See \code{\link{par}} for usage.
+\item \code{lend}: The line end style. See \code{\link{par}} for usage.
 }
 }
 \examples{
