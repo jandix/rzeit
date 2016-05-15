@@ -74,17 +74,17 @@ zeitPlot <- function(df, yTitle = "frequencies", xTitle = "time", title = NULL, 
 	if(any(names(plotPar)=="cex")) cex <- plotPar$cex
 	else cex <- 1
 	if(any(names(plotPar)=="cex.axis")) cex.axis <- plotPar$cex.axis
-	else cex.axis <- 1
+	else cex.axis <- cex
 	if(any(names(plotPar)=="cex.lab")) cex.lab <- plotPar$cex.lab
-	else cex.lab <- 1
+	else cex.lab <- cex
 	if(any(names(plotPar)=="cex.main")) cex.main <- plotPar$cex.main
-	else cex.main <- 1.2	
+	else cex.main <- cex + .2	
 	if(any(names(plotPar)=="las")) las <- plotPar$las
 	else las <- 0
 	if(any(names(plotPar)=="bty")) bty <- plotPar$bty
 	else bty <- "o"
 	if(any(names(plotPar)=="lend")) lend <- plotPar$lend
-	else lend <- 0
+	else lend <- 1
 	
 	if (absolute) {
 		yAxis <- df$freq
