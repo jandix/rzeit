@@ -115,7 +115,7 @@ zeitPlot <- function(df, yTitle = "frequencies", xTitle = "time", title = NULL, 
        ylim = yLimit)
 	if (mean) {
 		abline(h = mean(yAxis), col = col.mean, lty = lty.mean, lwd = lwd.mean)
-		axis(4, at = round(mean(yAxis), digits = 2), col = col.mean, col.axis = col.mean, cex = cex.axis, las = las)
+		axis(4, at = round(mean(yAxis), digits = 2), col = col.mean, col.axis = col.mean, cex.axis = cex.axis, las = las)
 	}
 
 	if (trend && nrow(df) > 20) {
