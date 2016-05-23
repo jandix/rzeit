@@ -57,8 +57,7 @@ The `results` object is of class `list` and provides information about the artic
  
 ```{r second, eval = TRUE}
 merkel_freq <- zeitFrequencies(ls = merkel,
-                               sort = "days",
-                               save = FALSE) 
+                               sort = "days") 
 head(merkel_freq)
 ```
 
@@ -66,8 +65,7 @@ Apart from these meta data, we can also process substantive article information.
 
 ```{r third, eval = TRUE}
 merkel_articles <- zeitToDf(ls = merkel,
-                            sort = "days",
-                            save = FALSE) 
+                            sort = "days") 
 names(merkel_articles)
 ```
 
@@ -111,8 +109,7 @@ merkel_3 <- fromZeit(q = "Bundeskanzlerin Angela Merkel",
                      dateEnd = "2009-10-27")
 
 merkel_3_freq <- zeitFrequencies(ls = merkel_3,
-                                 sort = "month",
-                                 save = FALSE)
+                                 sort = "month")
 ```
 
 ### Plot results

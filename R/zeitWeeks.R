@@ -56,27 +56,19 @@ weeksort <- function(ls, save, freq) {
   dfArticle$teaserTitle <- df$matches.teaser_title
   dfArticle$link <- df$matches.href
 
-
-
-  if (freq == TRUE){
-    if (save == TRUE){
-      if(is.null(getOption("zeitSaveDf"))){
-        options("zeitSaveDf" = "txt")
-      }
+  if (freq) { 
+    if (!is.na(save)) {
       saveZeit(dfFreqs,
                path = paste(getwd(), "/df", sep = ""),
                name = paste(ls$queryTerm, "freqs", "byWeek", sep = "_"),
-               format = getOption("zeitSaveDf"))
+               format = save)
     }
     return(dfFreqs)
-  } else{
-    if (save == TRUE){
-      if(is.null(getOption("zeitSaveDf"))){
-        options("zeitSaveDf" = "txt")
-      }
+  } else {
+    if (!is.na(save)) {
       saveZeit(dfArticle, path = paste(getwd(), "/df", sep = ""),
                name = paste(ls$queryTerm, "articles", "byWeek", sep = "_"),
-               format = getOption("zeitSaveDf"))
+               format = save)
     }
     return(dfArticle)
   }

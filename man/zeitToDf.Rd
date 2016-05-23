@@ -4,15 +4,15 @@
 \alias{zeitToDf}
 \title{Returns a data frame with sorted articles}
 \usage{
-  save = FALSE)
 zeitToDf(ls, sort = c("years", "months", "weeks", "days"), save = c("txt",
+  "sps", "sas", "dta"))
 }
 \arguments{
 \item{ls}{list. List which will be converted into the data frame. Attention: This function only works with the returned element of \code{\link{fromZeit}}.}
 
 \item{sort}{character. Specifies how the results are sorted. Possible options are \code{year}, \code{month}, \code{week} or \code{day}. Note: \code{week} and \code{day} may take some time for a long time period!}
 
-\item{save}{logical. If \code{TRUE} data frame is automatically saved in choosen format.}
+\item{save}{character. Specifies the file for automatic saving of the resulting data frame. Possible formats are \code{txt}, \code{sps}, \code{sas} or \code{dta}. No data is saved per default.}
 }
 \value{
 data frame

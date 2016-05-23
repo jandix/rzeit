@@ -62,25 +62,19 @@ yearsort <- function(ls, save, freq) {
     dfFreqs <- dfFreqs[-lastRow, ]
   }
 
-  if (freq == TRUE){
-    if (save == TRUE){
-      if(is.null(getOption("zeitSaveDf"))){
-        options("zeitSaveDf" = "txt")
-      }
+  if (freq) {
+    if (!is.na(save)) {
       saveZeit(dfFreqs,
                path = paste(getwd(), "/df", sep = ""),
                name = paste(ls$queryTerm, "freqs", "byYear", sep = "_"),
-               format = getOption("zeitSaveDf"))
+               format = save)
     }
     return(dfFreqs)
-  } else{
-    if (save == TRUE){
-      if(is.null(getOption("zeitSaveDf"))){
-        options("zeitSaveDf" = "txt")
-      }
+  } else {
+    if (!is.na(save)) {
       saveZeit(dfArticle, path = paste(getwd(), "/df", sep = ""),
                name = paste(ls$queryTerm, "articles", "byYear", sep = "_"),
-               format = getOption("zeitSaveDf"))
+               format = save)
     }
     return(dfArticle)
   }
