@@ -53,8 +53,6 @@ The following graphical parameters can optionally be added to customize the plot
 \item \code{cex.axis}: The magnification to be used for axis annotation relative to the current setting of \code{cex}.
 \item \code{cex.lab}: The magnification to be used for x and y labels relative to the current setting of \code{cex}.
 \item \code{cex.main}: The magnification to be used for main titles relative to the current setting of \code{cex}.
-\item \code{las}: The style of axis labels. See \code{\link{par}} for usage.
-\item \code{bty}: A character string which determined the type of box which is drawn about plots. See \code{\link{par}} for usage.
 \item \code{lend}: The line end style. See \code{\link{par}} for usage.
 }
 Additional graphical parameters may be set calling \code{\link{par}} before \code{zeitPlot}.

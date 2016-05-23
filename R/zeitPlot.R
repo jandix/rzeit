@@ -29,8 +29,6 @@
 #'\item \code{cex.axis}: The magnification to be used for axis annotation relative to the current setting of \code{cex}.
 #'\item \code{cex.lab}: The magnification to be used for x and y labels relative to the current setting of \code{cex}.
 #'\item \code{cex.main}: The magnification to be used for main titles relative to the current setting of \code{cex}.
-#'\item \code{las}: The style of axis labels. See \code{\link{par}} for usage.
-#'\item \code{bty}: A character string which determined the type of box which is drawn about plots. See \code{\link{par}} for usage.
 #'\item \code{lend}: The line end style. See \code{\link{par}} for usage.
 #'}
 #'Additional graphical parameters may be set calling \code{\link{par}} before \code{zeitPlot}. 
@@ -77,10 +75,6 @@ zeitPlot <- function(df, yTitle = "Frequency", xTitle = "Time", title = NULL, ab
 	else cex.lab <- cex
 	if(any(names(plotPar)=="cex.main")) cex.main <- plotPar$cex.main
 	else cex.main <- cex + .2	
-	if(any(names(plotPar)=="las")) las <- plotPar$las
-	else las <- 0
-	if(any(names(plotPar)=="bty")) bty <- plotPar$bty
-	else bty <- "o"
 	if(any(names(plotPar)=="lend")) lend <- plotPar$lend
 	else lend <- 1
 	
@@ -104,8 +98,6 @@ zeitPlot <- function(df, yTitle = "Frequency", xTitle = "Time", title = NULL, ab
        cex.axis = cex.axis,
        cex.lab = cex.lab,
        cex.main = cex.main,
-       las = las,
-       bty = bty,
        lend = lend,
        main = title,
        ylab = yTitle,
@@ -113,7 +105,7 @@ zeitPlot <- function(df, yTitle = "Frequency", xTitle = "Time", title = NULL, ab
        ylim = yLimit)
 	if (mean) {
 		abline(h = mean(yAxis), col = col.mean, lty = lty.mean, lwd = lwd.mean)
-		axis(4, at = round(mean(yAxis), digits = 2), col = col.mean, col.axis = col.mean, cex.axis = cex.axis, las = las)
+		axis(4, at = round(mean(yAxis), digits = 2), col = col.mean, col.axis = col.mean, cex.axis = cex.axis)
 	}
 
 	if (trend && nrow(df) > 20) {
