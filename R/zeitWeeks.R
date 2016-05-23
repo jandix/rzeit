@@ -1,8 +1,7 @@
 # function to sort by week
-weeksort <- function(ls, save = FALSE, freq){
+weeksort <- function(ls, save, freq) {
 
   # saving list as data frame
-
   df <- as.data.frame(ls[1])
 
   # defining start and end date adding weekdays and count of weeks
@@ -26,25 +25,20 @@ weeksort <- function(ls, save = FALSE, freq){
 
   dfFreqs$freq <- 0
   weeknum <- 1:length(ls[1][1])
-  while (i > 0){
-
+  while (i > 0) {
     j <- as.numeric(nrow(df))
 
-    while (j > 0){
+    while (j > 0) {
       dateTest <- df$matches.release_date[j]
       dateTest <- str_extract(dateTest, "\\d{4}-\\d{2}-\\d{2}")
       dateTest <- as.Date(dateTest)
 
-      if(dateTest >= dfFreqs$date[i] && dateTest <= dfFreqs$endWeek[i]){
-
+      if(dateTest >= dfFreqs$date[i] && dateTest <= dfFreqs$endWeek[i]) {
         dfFreqs$freq[i] <- dfFreqs$freq[i] + 1
         weeknum[j] <- dfFreqs$week[i]
       }
-      j <- j - 1
+      j <- j - 1 
     }
-
-
-
     i <- i - 1
   }
 
@@ -52,8 +46,7 @@ weeksort <- function(ls, save = FALSE, freq){
   maxi <- max(dfFreqs$freq)
   dfFreqs$freqPro <- round(dfFreqs$freq * 100 / maxi)
 
-# creating look up table for title, date, link and week
-
+	# creating table of articles
   dfArticle <- data.frame(weeknum)
   dfArticle$date <- as.Date(df$matches.release_date)
   dfArticle$title <- df$matches.title
@@ -66,7 +59,6 @@ weeksort <- function(ls, save = FALSE, freq){
 
 
   if (freq == TRUE){
-    # save if TRUE
     if (save == TRUE){
       if(is.null(getOption("zeitSaveDf"))){
         options("zeitSaveDf" = "txt")
@@ -76,15 +68,8 @@ weeksort <- function(ls, save = FALSE, freq){
                name = paste(ls$queryTerm, "freqs", "byWeek", sep = "_"),
                format = getOption("zeitSaveDf"))
     }
-
-
     return(dfFreqs)
-
-
-
   } else{
-
-    # save if TRUE
     if (save == TRUE){
       if(is.null(getOption("zeitSaveDf"))){
         options("zeitSaveDf" = "txt")

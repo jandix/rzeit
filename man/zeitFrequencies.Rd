@@ -4,21 +4,13 @@
 \alias{zeitFrequencies}
 \title{Returns a frequency table in choosen format}
 \usage{
-zeitFrequencies(ls, sort = c("years", "months", "weeks", "days", "single"),
   save = FALSE)
+zeitFrequencies(ls, sort = c("years", "months", "weeks", "days"),
 }
 \arguments{
 \item{ls}{list. List which will be converted into the data frame. Attention: This function only works with the returned element of \code{\link{fromZeit}}.}
 
-\item{sort}{character. Specifies how the results are sorted
-possible options:
-\itemize{
-  \item year
-  \item month
-  \item week
-  \item day
-  \item single
-  }}
+\item{sort}{character. Specifies how the results are sorted. Possible options are \code{year} (default), \code{month}, \code{week} or \code{day}. Note: \code{week} and \code{day} may take some time for a long time period!}
 
 \item{save}{logical. If \code{TRUE} data frame is automatically saved in choosen format.}
 }
@@ -28,25 +20,10 @@ data frame
 \description{
 The returned data frame includes a continous list of dates in choosen sequences and the related frequencies. The number of either day/week/month/year, are comparable to the data frame, created by \code{\link{zeitToDf}}.
 }
-\details{
-Dataframes can be saved in different formats. You can choose your preferred format by using \code{options("zeitSaveDf" = > set your option here <)} to set the option to your preferred option. The default format for save is txt.
-Further options are:
- \itemize{
-  \item txt
-  \item sps
-  \item sas
-  \item dta
-  }
-}
 \examples{
 \dontrun{
-## Example 1: Returns a data frame, sorted by months and saved as .txt
-
-   zeitFrequencies(terms, "month", save = TRUE)
-
-## Exapmle 2: Returns a data frame, sorted by month and saved as .sps
-
-   options("zeitSaveDf" = "sps")
+# sort by month without saving
+zeitFrequencies(terms, "month")
 
    zeitFrequencies(terms, "day", save = TRUE)
 }

@@ -4,21 +4,13 @@
 \alias{zeitToDf}
 \title{Returns a data frame with sorted articles}
 \usage{
-zeitToDf(ls, sort = c("years", "months", "weeks", "days", "single"),
   save = FALSE)
+zeitToDf(ls, sort = c("years", "months", "weeks", "days"), save = c("txt",
 }
 \arguments{
 \item{ls}{list. List which will be converted into the data frame. Attention: This function only works with the returned element of \code{\link{fromZeit}}.}
 
-\item{sort}{character. Specifies how the results are sorted
-possible options:
-\itemize{
-  \item year
-  \item month
-  \item week
-  \item day
-  \item single
-  }}
+\item{sort}{character. Specifies how the results are sorted. Possible options are \code{year}, \code{month}, \code{week} or \code{day}. Note: \code{week} and \code{day} may take some time for a long time period!}
 
 \item{save}{logical. If \code{TRUE} data frame is automatically saved in choosen format.}
 }
@@ -26,29 +18,15 @@ possible options:
 data frame
 }
 \description{
-The data frame includes the articles, the related links and the number of either day/week/month/year, comparable to the data frame, created by \code{\link{zeitFrequencies}}.
-}
-\details{
-Dataframes can be saved in different formats. You can choose your preferred format by using \code{options("zeitSaveDf" = > set your option here <)} to set the option to your preferred option. The default format for save is txt.
-Further options are:
- \itemize{
-  \item txt
-  \item sps
-  \item sas
-  \item dta
-  }
+The returned data frame includes the articles, the related links and the number of either day/week/month/year, comparable to the data frame, created by \code{\link{zeitFrequencies}}.
 }
 \examples{
 \dontrun{
-## Example 1: Returns a list with two data frames, sorted by months and saved as .txt
+# sort by month without saving
+zeitToDf(terms, "month")
 
-   zeitToDf(terms, "month", save = TRUE)
-
-## Exapmle 2: Returns a list with two data frames, sorted by month and saved as .sps
-
-   options("zeitSaveDf" = "sps")
-
-   zeitToDf(terms, "day", save = TRUE)
+# sort by year and save as .sps
+zeitToDf(terms, "day", "sps")
 }
 }
 \author{

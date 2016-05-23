@@ -117,10 +117,27 @@ merkel_3_freq <- zeitFrequencies(ls = merkel_3,
 
 ### Plot results
 
-Lastly, we plot the results of the last request:
+Now, we plot the results of the last request:
 
 ```{r, eval = TRUE, fig.width = 7.2, fig.height = 5}
 par(mfrow = c(1, 2))
 zeitPlot(merkel_3_freq, title = "Absolute Frequencies")
 zeitPlot(merkel_3_freq, title = "Relative Frequencies", absolute = FALSE)
+```
+
+There are several parameters to customize the plot. To hide the trend line or the mean line we set the the parameters `trend` or `mean` to `FALSE`:
+
+```{r, eval = TRUE, fig.width = 5, fig.height = 5}
+zeitPlot(merkel_3_freq, title = "Bars only",
+				 trend = FALSE, mean = FALSE)
+```
+
+Colors, line types, line widths and text size and orientation can be changed using optional graphical parameters:
+
+```{r, eval = TRUE, fig.width = 5, fig.height = 5}
+zeitPlot(merkel_3_freq, title = "Color, line type and line width",
+				 col.bar = "#C1C1C1", lty.bar = "longdash", lwd.bar = 3,
+				 col.trend = "#181818", lty.trend = "dotdash", lwd.trend = 2,
+				 col.mean = "#181818", lty.mean = "dotted", lwd.mean = 2,
+				 cex = 1.2)
 ```

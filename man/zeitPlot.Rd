@@ -4,11 +4,11 @@
 \alias{zeitPlot}
 \title{Plot results of API request}
 \usage{
-zeitPlot(df, yTitle = "frequencies", xTitle = "time", title = NULL,
+zeitPlot(df, yTitle = "Frequency", xTitle = "Time", title = NULL,
   absolute = TRUE, trend = TRUE, mean = TRUE, lowessFactor = 0.2, ...)
 }
 \arguments{
-\item{df}{data frame. Data frame that is the basis for the graph.}
+\item{df}{data.frame. Data set to be plotted, created by \code{\link{zeitFrequencies}}.q}
 
 \item{yTitle}{character. Labels the y-axis.}
 
@@ -22,9 +22,9 @@ zeitPlot(df, yTitle = "frequencies", xTitle = "time", title = NULL,
 
 \item{mean}{logical (default is \code{TRUE}). Indicates if a horizontal mean line is plotted.}
 
-\item{lowessFactor}{numeric. "This gives the proportion of points in the plot which influence the smooth at each value. Larger values give more smoothness." For more details see \code{\link[stats]{lowess}}}
+\item{lowessFactor}{numeric (0 < lowessFactor <= 1, default is \code{0.2}). Gives the proportion of points in the plot, which influence the smooth at each value. Larger values give more smoothness. For more details see \code{\link[stats]{lowess}}.}
 
-\item{\dots}{Graphical parameters, see below.}
+\item{\dots}{Optional graphical parameters, see below.}
 }
 \value{
 Plots a graph based on given data frame.
@@ -34,9 +34,7 @@ Function to plot the results of the data frames by frequencies and time automati
 }
 \details{
 If the data frame includes less than 20 observations, no trend line is plotted. The dotted line indicates the mean of frequencies.
-
 \emph{Optional graphical parameters}
-
 The following graphical parameters can optionally be added to customize the plot:
 \itemize{
 \item \code{col.bar}: The color to be used for bars. See \code{\link{par}} for usage.
@@ -59,6 +57,7 @@ The following graphical parameters can optionally be added to customize the plot
 \item \code{bty}: A character string which determined the type of box which is drawn about plots. See \code{\link{par}} for usage.
 \item \code{lend}: The line end style. See \code{\link{par}} for usage.
 }
+Additional graphical parameters may be set calling \code{\link{par}} before \code{zeitPlot}.
 }
 \examples{
 \dontrun{
