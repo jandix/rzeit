@@ -16,7 +16,7 @@ zeitSplitSearch <- function(base, url, begin, end, q, fields) {
   dateVector[length(dateVector) + 1] <- startDate %m+% months(1)
   i.max <- i <- as.numeric(length(dateVector)) - 1
   
-  pb <- txtProgressBar(min = 1, max = i.max, style = 3)
+  if(i.max > 1) pb <- txtProgressBar(min = 1, max = i.max, style = 3)
   
   df <- data.frame(NULL)
   lsTest <- fromJSON(url)
@@ -52,8 +52,11 @@ zeitSplitSearch <- function(base, url, begin, end, q, fields) {
       # system sleep
       Sys.sleep(0.5)
 
+      # next
       i <- i - 1
-      setTxtProgressBar(pb, i.max-i)
+      
+      # update progress bar
+      if(i.max > 1) setTxtProgressBar(pb, i.max-i)
 		}
 		close(pb)
 	}
