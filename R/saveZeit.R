@@ -2,9 +2,10 @@
 #'@description Internal function to save data sets to disk in different file formats.
 #'@param df \code{data.frame}. Data set created.
 #'@param path character. Directory path.
-#'@param format character. Format, one of "txt", "sps", "sas" or "dta".
+#'@param format character. Format, one of \code{"txt"}, \code{"sps"}, \code{"sas"} or \code{"dta"}.
 #'@param name character. File name.
 #'@references \url{http://www.statmethods.net/input/exportingdata.html}
+#'@author Jan Dix (\email{jan.dix@@uni-konstanz.de}), Jana Blahak (\email{jana.blahak@@uni-konstanz.de}), Christian Graul (\email{christian.graul@@gmail.com})
 saveZeit <- function(df, format = c("txt", "sps", "sas", "dta"), path = getwd(), name = "zeit_df") {
  
   format <- match.arg(format)

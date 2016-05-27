@@ -1,6 +1,6 @@
-#'@title Plot results of API request
-#'@description Function to plot the results of the data frames by frequencies and time automatically. Attention: Only works with the frequency data frames created by the internal function \code{zeitSorting} of the \code{rzeit} package.
-#'@param df data.frame. Data set to be plotted, created by \code{\link{zeitFrequencies}}.q
+#'@title Plot frequency table
+#'@description \code{zeitPlot} plots the frequency table created by \code{\link{zeitFrequencies}}.
+#'@param df data.frame. Data set to be plotted, created by \code{\link{zeitFrequencies}}.
 #'@param yTitle character. Labels the y-axis.
 #'@param xTitle character. Labels the x-axis.
 #'@param title character. Title of the graph.
@@ -38,7 +38,7 @@
 #'\dontrun{
 #'zeitPlot(dfFrequenciesWeek, yTitle = "Week", xTitle = "Frequencies of articles")
 #'}
-#'@author Jan Dix, \email{jan.dix@@uni-konstanz.de} Jana Blahak, \email{jana.blahak@@uni-konstanz.de}
+#'@author Jan Dix (\email{jan.dix@@uni-konstanz.de}), Jana Blahak (\email{jana.blahak@@uni-konstanz.de}), Christian Graul (\email{christian.graul@@gmail.com})
 #'@export
 zeitPlot <- function(df, yTitle = "Frequency", xTitle = "Time", title = NULL, absolute = TRUE, trend = TRUE, mean = TRUE, lowessFactor = 0.2, ...){
 		

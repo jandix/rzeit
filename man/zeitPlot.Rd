@@ -2,13 +2,13 @@
 % Please edit documentation in R/zeitPlot.R
 \name{zeitPlot}
 \alias{zeitPlot}
-\title{Plot results of API request}
+\title{Plot frequency table}
 \usage{
 zeitPlot(df, yTitle = "Frequency", xTitle = "Time", title = NULL,
   absolute = TRUE, trend = TRUE, mean = TRUE, lowessFactor = 0.2, ...)
 }
 \arguments{
-\item{df}{data.frame. Data set to be plotted, created by \code{\link{zeitFrequencies}}.q}
+\item{df}{data.frame. Data set to be plotted, created by \code{\link{zeitFrequencies}}.}
 
 \item{yTitle}{character. Labels the y-axis.}
 
@@ -30,7 +30,7 @@ zeitPlot(df, yTitle = "Frequency", xTitle = "Time", title = NULL,
 Plots a graph based on given data frame.
 }
 \description{
-Function to plot the results of the data frames by frequencies and time automatically. Attention: Only works with the frequency data frames created by the internal function \code{zeitSorting} of the \code{rzeit} package.
+\code{zeitPlot} plots the frequency table created by \code{\link{zeitFrequencies}}.
 }
 \details{
 If the data frame includes less than 20 observations, no trend line is plotted. The dotted line indicates the mean of frequencies.
@@ -63,7 +63,7 @@ zeitPlot(dfFrequenciesWeek, yTitle = "Week", xTitle = "Frequencies of articles")
 }
 }
 \author{
-Jan Dix, \email{jan.dix@uni-konstanz.de} Jana Blahak, \email{jana.blahak@uni-konstanz.de}
+Jan Dix (\email{jan.dix@uni-konstanz.de}), Jana Blahak (\email{jana.blahak@uni-konstanz.de}), Christian Graul (\email{christian.graul@gmail.com})
 }
 \seealso{
 \code{\link{zeitSetApiKey}} \code{\link{fromZeit}} \code{\link{zeitFrequencies}} \code{\link{zeitToDf}}

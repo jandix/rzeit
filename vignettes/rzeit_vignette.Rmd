@@ -61,7 +61,7 @@ merkel_freq <- zeitFrequencies(ls = merkel,
 head(merkel_freq)
 ```
 
-Apart from these meta data, we can also process substantive article information. The function `zeitToDf` converts the list returned from `fromZeit` into a data frame:
+Apart from these meta data, we can also process substantive article information. The function `zeitToDf` converts the list returned from `fromZeit` into a data frame. Articles can optionally be sorted by any meta data variable:
 
 ```{r third, eval = TRUE}
 merkel_articles <- zeitToDf(ls = merkel,

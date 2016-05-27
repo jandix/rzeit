@@ -1,4 +1,4 @@
-#'@title Connects to ZEIT Online API
+#'@title Connect to ZEIT Online API
 #'@description Exposes a search in the ZEIT online archive and returns results for the given query.
 #'@param api character. The personal api code. To request an API key see: \url{http://developer.zeit.de/quickstart/} This parameter is by default set to the R Environment.
 #'@param q character (vector). Search query term.
@@ -29,28 +29,20 @@
 #'@return A list including articles and meta information about the query.
 #'@examples
 #'\dontrun{
-#' ## Example 1: simple query with the limit of 1000 returned articles 
-#' ## between 2002 and 2007, API Key is set manually.
+#'# simple query with the limit of 1000 returned articles 
+#'# between 2002 and 2007, API Key is set manually.
+#'merkel <- fromZeit(api = *set your personal API Key here*,
+#'	q = "angela merkel", limit = 1000,
+#'	dateBegin = "2002-01-01", dateEnd = "2007-12-31")
 #'
-#'    merkel <- fromZeit(api = *set your personal API Key here*,
-#'                          q = "angela merkel",
-#'                          limit = 1000,
-#'                          dateBegin = "2002-01-01",
-#'                          dateEnd = "2007-12-31")
-#'
-#' ## Example 2: Because the number of available articles exceeds the limit of 1000 
-#' ## we use \code{limit = "all"}, further we set the API Key in advance.
-#'
-#'    options("zeitApiKey" = *set your personal API Key here*)
-#'
-#'    merkel_all <- fromZeit(q = "angela merkel",
-#'                          limit = "all",
-#'                          dateBegin = "2002-01-01",
-#'                          dateEnd = "2007-12-31")
+#'# as the number of available articles exceeds the limit of 1000 
+#'# we use \code{limit = "all"}, further we set the API Key in advance
+#'options("zeitApiKey" = *set your personal API Key here*)
+#'merkel_all <- fromZeit(q = "angela merkel", limit = "all",
+#'	dateBegin = "2002-01-01", dateEnd = "2007-12-31")
 #'}
-#'@author Jan Dix, \email{jan.dix@@uni-konstanz.de} Jana Blahak, \email{jana.blahak@@uni-konstanz.de}  Christian Graul
+#'@author Jan Dix (\email{jan.dix@@uni-konstanz.de}), Jana Blahak (\email{jana.blahak@@uni-konstanz.de}), Christian Graul (\email{christian.graul@@gmail.com})
 #'@export
-
 fromZeit <- function(api = Sys.getenv("zeit_api_key"),
                      q,
                      limit = 50,

@@ -10,7 +10,7 @@ saveZeit(df, format = c("txt", "sps", "sas", "dta"), path = getwd(),
 \arguments{
 \item{df}{\code{data.frame}. Data set created.}
 
-\item{format}{character. Format, one of "txt", "sps", "sas" or "dta".}
+\item{format}{character. Format, one of \code{"txt"}, \code{"sps"}, \code{"sas"} or \code{"dta"}.}
 
 \item{path}{character. Directory path.}
 
@@ -18,6 +18,9 @@ saveZeit(df, format = c("txt", "sps", "sas", "dta"), path = getwd(),
 }
 \description{
 Internal function to save data sets to disk in different file formats.
+}
+\author{
+Jan Dix (\email{jan.dix@uni-konstanz.de}), Jana Blahak (\email{jana.blahak@uni-konstanz.de}), Christian Graul (\email{christian.graul@gmail.com})
 }
 \references{
 \url{http://www.statmethods.net/input/exportingdata.html}

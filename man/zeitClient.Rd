@@ -23,6 +23,6 @@ zeitClient()
 }
 }
 \author{
-Christian Graul
+Christian Graul (\email{christian.graul@gmail.com})
 }
 

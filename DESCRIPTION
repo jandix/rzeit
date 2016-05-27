@@ -3,12 +3,12 @@ Title: Client for the ZEIT ONLINE Content API
 Description: Interface to gather newspaper articles from 'DIE ZEIT' and 'ZEIT ONLINE',
 	based on a multilevel query. Including sorting algorithms and graphical output options. 
 	A personal API key is required for usage.
-Version: 0.4
+Version: 0.5
 Date: 2016-04-27
 Authors@R: c(person("Jan", "Dix",  role = c("cre"), email = "jan.dix@uni-konstanz.de"), 
 	person ("Jana", "Blahak", role = c("aut"), email= "jana.blahak@uni-konstanz.de"),
 	person ("Simon", "Munzert", role = c("ths")),
-	person ("Christian", "Graul", role = c("ctb")))
+	person ("Christian", "Graul", role = c("ctb"), email= "christian.graul@gmail.com"))
 Depends:
     R (>= 3.2.0)
 License: MIT + file LICENSE
@@ -19,6 +19,7 @@ Imports:
 	jsonlite,
 	lubridate,
 	plyr,
+	ISOweek,
 	foreign
 Suggests:
 	rvest,

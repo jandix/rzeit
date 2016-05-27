@@ -1,19 +1,26 @@
-#'@title Returns a data frame with sorted articles
-#'@description The returned data frame includes the articles, the related links and the number of either day/week/month/year, comparable to the data frame, created by \code{\link{zeitFrequencies}}.
-#'@param ls list. List which will be converted into the data frame. Attention: This function only works with the returned element of \code{\link{fromZeit}}.
-#'@param sort character. Specifies how the results are sorted. Possible options are \code{year}, \code{month}, \code{week} or \code{day}. Note: \code{week} and \code{day} may take some time for a long time period!
+#'@title Convert list to data frame with sorted articles
+#'@description \code{zeitToDf} converts the list object created by \code{\link{fromZeit}} to a data frame.
+#'@param ls list. List, created by \code{\link{fromZeit}}, that will be converted into the data frame.
+#'@param sort character. Specifies how the results are sorted. Possible options are available variables: \code{"uuid"}, \code{"title"}, \code{"subtitle"}, \code{"supertitle"}, \code{"release_date"}, \code{"href"}, \code{"uri"}, \code{"snippet"}, \code{"teaser_text"} or \code{"teaser_title"} (or a subset of these, if the \code{fields} parameter was set in \code{fromZeit}-function).
 #'@param save character. Specifies the file for automatic saving of the resulting data frame. Possible formats are \code{txt}, \code{sps}, \code{sas} or \code{dta}. No data is saved per default.
-#'@seealso \code{\link{zeitSetApiKey}} \code{\link{fromZeit}} \code{\link{zeitFrequencies}} \code{\link{zeitPlot}}
+#'@seealso \code{\link{zeitSetApiKey}} \code{\link{fromZeit}} 
 #'@return data frame
 #'@examples
 #'\dontrun{
-#'# sort by month without saving
-#'zeitToDf(terms, "month")
+#'# get data
+#'mrkl <- fromZeit(q = "angela merkel", limit = "all", 
+#'	dateBegin = "2002-01-01", dateEnd = "2007-12-31")
 #'
-#'# sort by year and save as .sps
-#'zeitToDf(terms, "day", "sps")
+#'# convert to data frame without sorting and saving
+#'zeitToDf(ls = mrkl)
+#'
+#'# convert and sort by release_date
+#'zeitToDf(ls = mrkl, sort = "release_date")
+#'
+#'# convert and save as .txt
+#'zeitToDf(ls = mrkl, save = "txt")
 #'}
-#'@author Jan Dix, \email{jan.dix@@uni-konstanz.de} Jana Blahak, \email{jana.blahak@@uni-konstanz.de}
+#'@author Jan Dix (\email{jan.dix@@uni-konstanz.de}), Jana Blahak (\email{jana.blahak@@uni-konstanz.de}), Christian Graul (\email{christian.graul@@gmail.com})
 #'@export
 zeitToDf <- function(ls, sort = c("years", "months", "weeks", "days"), save = c("txt", "sps", "sas", "dta")){
 	
