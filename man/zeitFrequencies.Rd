@@ -8,7 +8,7 @@ zeitFrequencies(ls, sort = c("year", "month", "week", "day"),
   save = c("txt", "sps", "sas", "dta"))
 }
 \arguments{
-\item{ls}{list. List, created by \code{\link{fromZeit}}, to calculate the frequency table.}
+\item{ls}{list. List, created by \code{\link{zeitGet}}, to calculate the frequency table.}
 
 \item{sort}{character. Specifies how the results are sorted. Possible options are \code{"year"} (default), \code{"month"}, \code{"week"} or \code{"day"}.}
 
@@ -20,10 +20,13 @@ data frame
 \description{
 \code{zeitFrequencies} calculates a frequency table, i.e. a data frame including a continous list of dates in choosen sequences and the related frequencies. Returned objects can directly be used with \code{\link{zeitPlot}}.
 }
+\details{
+Files are saved to the working directory per default. Use \code{\link{zeitSave}} to change the path.
+}
 \examples{
 \dontrun{
 # get data
-mrkl <- fromZeit(q = "angela merkel", limit = "all", 
+mrkl <- zeitGet(q = "angela merkel", limit = "all", 
 dateBegin = "2002-01-01", dateEnd = "2007-12-31")
 
 # sort by month without saving
@@ -37,6 +40,6 @@ zeitFrequencies(ls = mrkl, sort = "day", save = "sas")
 Jan Dix (\email{jan.dix@uni-konstanz.de}), Jana Blahak (\email{jana.blahak@uni-konstanz.de}), Christian Graul (\email{christian.graul@gmail.com})
 }
 \seealso{
-\code{\link{zeitSetApiKey}} \code{\link{fromZeit}} \code{\link{zeitToDf}} \code{\link{zeitPlot}}
+\code{\link{zeitSetApiKey}} \code{\link{zeitGet}} \code{\link{zeitToDf}} \code{\link{zeitPlot}}
 }
 

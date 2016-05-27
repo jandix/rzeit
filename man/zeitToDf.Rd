@@ -9,9 +9,9 @@ zeitToDf(ls, sort = c("uuid", "title", "subtitle", "supertitle",
   save = c("txt", "sps", "sas", "dta"))
 }
 \arguments{
-\item{ls}{list. List, created by \code{\link{fromZeit}}, that will be converted into the data frame.}
+\item{ls}{list. List, created by \code{\link{zeitGet}}, that will be converted into the data frame.}
 
-\item{sort}{character. Specifies how the results are sorted. Possible options are available variables: \code{"uuid"}, \code{"title"}, \code{"subtitle"}, \code{"supertitle"}, \code{"release_date"}, \code{"href"}, \code{"uri"}, \code{"snippet"}, \code{"teaser_text"} or \code{"teaser_title"} (or a subset of these, if the \code{fields} parameter was set in \code{fromZeit}-function).}
+\item{sort}{character. Specifies how the results are sorted. Possible options are available variables: \code{"uuid"}, \code{"title"}, \code{"subtitle"}, \code{"supertitle"}, \code{"release_date"}, \code{"href"}, \code{"uri"}, \code{"snippet"}, \code{"teaser_text"} or \code{"teaser_title"} (or a subset of these, if the \code{fields} parameter was set in \code{zeitGet}-function).}
 
 \item{save}{character. Specifies the file for automatic saving of the resulting data frame. Possible formats are \code{txt}, \code{sps}, \code{sas} or \code{dta}. No data is saved per default.}
 }
@@ -19,12 +19,15 @@ zeitToDf(ls, sort = c("uuid", "title", "subtitle", "supertitle",
 data frame
 }
 \description{
-\code{zeitToDf} converts the list object created by \code{\link{fromZeit}} to a data frame.
+\code{zeitToDf} converts the list object created by \code{\link{zeitGet}} to a data frame.
+}
+\details{
+Files are saved to the working directory per default. Use \code{\link{zeitSave}} to change the path.
 }
 \examples{
 \dontrun{
 # get data
-mrkl <- fromZeit(q = "angela merkel", limit = "all", 
+mrkl <- zeitGet(q = "angela merkel", limit = "all", 
 dateBegin = "2002-01-01", dateEnd = "2007-12-31")
 
 # convert to data frame without sorting and saving
@@ -41,6 +44,6 @@ zeitToDf(ls = mrkl, save = "txt")
 Jan Dix (\email{jan.dix@uni-konstanz.de}), Jana Blahak (\email{jana.blahak@uni-konstanz.de}), Christian Graul (\email{christian.graul@gmail.com})
 }
 \seealso{
-\code{\link{zeitSetApiKey}} \code{\link{fromZeit}}
+\code{\link{zeitSetApiKey}} \code{\link{zeitGet}}
 }
 

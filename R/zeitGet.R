@@ -6,7 +6,7 @@
 #'@param dateBegin character. Begin date - Restricts responses to results with publication dates of the date specified or later. In the form YYYY-MM-DD.
 #'@param dateEnd character. End date - Restricts responses to results with publication dates of the date specified or earlier. In the form YYYY-MM-DD.
 #'@param fields character (vector). Selection of output fields. Possible values are: \code{subtitle}, \code{uuid}, \code{title}, \code{href}, \code{release_date}, \code{uri}, \code{snippet}, \code{supertitle}, \code{teaser_text} and \code{teaser_title}.
-#'@details \code{fromZeit.R} is the function, which interacts directly with the ZEIT Online API. We only used the content endpoint for this package. There are further endpoints (e.g. /author, /product) not included into this package to further specify the search if needed. The whole list of possible endpoints can be accessed here \url{http://developer.zeit.de/docs/}.
+#'@details \code{zeitGet.R} is the function, which interacts directly with the ZEIT Online API. We only used the content endpoint for this package. There are further endpoints (e.g. /author, /product) not included into this package to further specify the search if needed. The whole list of possible endpoints can be accessed here \url{http://developer.zeit.de/docs/}.
 #'
 #'\emph{Query building}
 #'
@@ -31,19 +31,19 @@
 #'\dontrun{
 #'# simple query with the limit of 1000 returned articles 
 #'# between 2002 and 2007, API Key is set manually.
-#'merkel <- fromZeit(api = *set your personal API Key here*,
+#'merkel <- zeitGet(api = *set your personal API Key here*,
 #'	q = "angela merkel", limit = 1000,
 #'	dateBegin = "2002-01-01", dateEnd = "2007-12-31")
 #'
 #'# as the number of available articles exceeds the limit of 1000 
 #'# we use \code{limit = "all"}, further we set the API Key in advance
 #'options("zeitApiKey" = *set your personal API Key here*)
-#'merkel_all <- fromZeit(q = "angela merkel", limit = "all",
+#'merkel_all <- zeitGet(q = "angela merkel", limit = "all",
 #'	dateBegin = "2002-01-01", dateEnd = "2007-12-31")
 #'}
 #'@author Jan Dix (\email{jan.dix@@uni-konstanz.de}), Jana Blahak (\email{jana.blahak@@uni-konstanz.de}), Christian Graul (\email{christian.graul@@gmail.com})
 #'@export
-fromZeit <- function(api = Sys.getenv("zeit_api_key"),
+zeitGet <- function(api = Sys.getenv("zeit_api_key"),
                      q,
                      limit = 50,
                      dateBegin = "2004-01-01",

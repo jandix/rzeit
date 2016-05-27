@@ -2,7 +2,7 @@
 #'@description Function to set you API Key to the R environment when starting using \code{rzeit} package. Attention: You should only execute this functions once.
 #'@param apiKey character. The personal api code. To request an API key see: \url{http://developer.zeit.de/quickstart/}
 #'@param path character. Path where the enviornment is stored. Default is the normalized path.
-#'@seealso \code{\link{fromZeit}} \code{\link{zeitFrequencies}} \code{\link{zeitToDf}} \code{\link{zeitPlot}}
+#'@seealso \code{\link{zeitGet}} \code{\link{zeitFrequencies}} \code{\link{zeitToDf}} \code{\link{zeitPlot}}
 #'@examples
 #'\dontrun{
 #'zeitSetApiKey(apiKey = "this_is_your_api_key", path = "")

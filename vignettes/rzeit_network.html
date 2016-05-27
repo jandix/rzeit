@@ -10,7 +10,7 @@
 
 <meta name="author" content="Jana Blahak &amp; Jan Dix" />
 
-<meta name="date" content="2016-04-27" />
+<meta name="date" content="2016-05-27" />
 
 <title>Constructing a network of politicians from newspaper data</title>
 
@@ -75,7 +75,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="header">
 <h1 class="title">Constructing a network of politicians from newspaper data</h1>
 <h4 class="author"><em>Jana Blahak &amp; Jan Dix</em></h4>
-<h4 class="date"><em>2016-04-27</em></h4>
+<h4 class="date"><em>2016-05-27</em></h4>
 </div>
 
 
@@ -120,7 +120,7 @@ government_df &lt;-<span class="st"> </span>government_df[, -<span class="dv">1<
 ## 4      Thomas de Maizière   CDU    CDU      3
 ## 5              Heiko Maas   SPD    SPD      4
 ## 6       Wolfgang Schäuble   CDU    CDU      5</code></pre>
-<p>Next, we construct a second data frame, <code>count_df</code>, to store pairs of politicians together with corresponding numeric IDs. We will later use this data frame for our API queries with the <code>fromZeit</code> function:</p>
+<p>Next, we construct a second data frame, <code>count_df</code>, to store pairs of politicians together with corresponding numeric IDs. We will later use this data frame for our API queries with the <code>zeitGet</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">i &lt;-<span class="st"> </span><span class="dv">1</span>
 from &lt;-<span class="st"> </span><span class="ot">NULL</span>
 to &lt;-<span class="st"> </span><span class="ot">NULL</span>
@@ -177,14 +177,14 @@ while (i &lt;=<span class="st"> </span><span class="kw">nrow</span>(count_df)){
 </div>
 <div id="performing-the-queries-and-counting" class="section level2">
 <h2>Performing the queries and counting</h2>
-<p>Now R is prepared to perform the actual queries. For each query, we paste together a pair of names from the <code>count_df</code> data frame. When executing the query with <code>fromZeit</code>, we specify <code>limit = 1</code> because we are only interested in the numbers found in the respective period, and restrict results to the current government period:</p>
+<p>Now R is prepared to perform the actual queries. For each query, we paste together a pair of names from the <code>count_df</code> data frame. When executing the query with <code>zeitGet</code>, we specify <code>limit = 1</code> because we are only interested in the numbers found in the respective period, and restrict results to the current government period:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">count_df$count &lt;-<span class="st"> </span><span class="dv">0</span>
 i &lt;-<span class="st"> </span><span class="dv">1</span>
 
 while (i &lt;=<span class="st"> </span><span class="kw">nrow</span>(count_df)){
   query =<span class="st"> </span><span class="kw">paste</span>(count_df$from[i], 
                 count_df$to[i], <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>)
-  articles &lt;-<span class="st"> </span><span class="kw">fromZeit</span>(<span class="dt">q =</span> query, 
+  articles &lt;-<span class="st"> </span><span class="kw">zeitGet</span>(<span class="dt">q =</span> query, 
                        <span class="dt">limit =</span> <span class="dv">1</span>, 
                        <span class="dt">dateBegin =</span> <span class="st">&quot;2014-01-01&quot;</span>, 
                        <span class="dt">dateEnd =</span> <span class="st">&quot;2015-08-10&quot;</span>)
@@ -251,8 +251,8 @@ while (i &lt;=<span class="st"> </span><span class="kw">nrow</span>(government_d
              <span class="kw">JS</span>(<span class="st">'d3.scale.ordinal()</span>
 <span class="st">                .domain([&quot;SPD&quot;, &quot;CSU&quot;,&quot;CDU&quot;])</span>
 <span class="st">                .range([&quot;#e1001a&quot;, &quot;#007dbd&quot; , &quot;#e95d0f&quot;]);'</span>))</code></pre></div>
-<p><div id="htmlwidget-2246" style="width:800px;height:400px;" class="forceNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-2246">{"x":{"links":{"source":[0,0,0,0,1,1,2,8,9],"target":[1,2,8,9,2,12,9,13,13],"value":[3,1,1,1,2,1,1,1,1]},"nodes":{"name":["Angela Merkel","Sigmar Gabriel","Frank-Walter Steinmeier","Thomas de Maizière","Heiko Maas","Wolfgang Schäuble","Andrea Nahles","Christian Schmidt","Ursula von der Leyen","Manuela Schwesig","Hermann Gröhe","Alexander Dobrindt","Barbara Hendricks","Johanna Wanka","Gerd Müller","Peter Altmaier"],"group":["CDU","SPD","SPD","CDU","SPD","CDU","SPD","CSU","CDU","SPD","CDU","CSU","SPD","CDU","CSU","CDU"],"nodesize":[500,500,333,0,0,0,0,0,167,250,0,0,83,167,0,0]},"options":{"NodeID":"name","Group":"party","colourScale":"d3.scale.ordinal()\n                .domain([\"SPD\", \"CSU\",\"CDU\"])\n                .range([\"#e1001a\", \"#007dbd\" , \"#e95d0f\"]);","fontSize":7,"fontFamily":"serif","clickTextSize":17.5,"linkDistance":"function(d){return d.value}","linkWidth":"function(d){return d.value / 50}","charge":-120,"linkColour":"#666","opacity":0.8,"zoom":false,"legend":true,"nodesize":true,"radiusCalculation":" Math.sqrt(d.nodesize)+6","bounded":false,"opacityNoHover":0,"clickAction":null}},"evals":["options.linkDistance"],"jsHooks":[]}</script></p>
+<p><div id="htmlwidget-7236" style="width:800px;height:400px;" class="forceNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7236">{"x":{"links":{"source":[0,0,0,0,1,1,2,8,9],"target":[1,2,8,9,2,12,9,13,13],"value":[3,1,1,1,2,1,1,1,1]},"nodes":{"name":["Angela Merkel","Sigmar Gabriel","Frank-Walter Steinmeier","Thomas de Maizière","Heiko Maas","Wolfgang Schäuble","Andrea Nahles","Christian Schmidt","Ursula von der Leyen","Manuela Schwesig","Hermann Gröhe","Alexander Dobrindt","Barbara Hendricks","Johanna Wanka","Gerd Müller","Peter Altmaier"],"group":["CDU","SPD","SPD","CDU","SPD","CDU","SPD","CSU","CDU","SPD","CDU","CSU","SPD","CDU","CSU","CDU"],"nodesize":[500,500,333,0,0,0,0,0,167,250,0,0,83,167,0,0]},"options":{"NodeID":"name","Group":"party","colourScale":"d3.scale.ordinal()\n                .domain([\"SPD\", \"CSU\",\"CDU\"])\n                .range([\"#e1001a\", \"#007dbd\" , \"#e95d0f\"]);","fontSize":7,"fontFamily":"serif","clickTextSize":17.5,"linkDistance":"function(d){return d.value}","linkWidth":"function(d){return d.value / 50}","charge":-120,"linkColour":"#666","opacity":0.8,"zoom":false,"legend":true,"nodesize":true,"radiusCalculation":" Math.sqrt(d.nodesize)+6","bounded":false,"opacityNoHover":0,"clickAction":null}},"evals":["options.linkDistance"],"jsHooks":[]}</script></p>
 </div>
 
 

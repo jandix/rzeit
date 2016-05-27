@@ -1,14 +1,15 @@
 #'@title Convert list to data frame with sorted articles
-#'@description \code{zeitToDf} converts the list object created by \code{\link{fromZeit}} to a data frame.
-#'@param ls list. List, created by \code{\link{fromZeit}}, that will be converted into the data frame.
-#'@param sort character. Specifies how the results are sorted. Possible options are available variables: \code{"uuid"}, \code{"title"}, \code{"subtitle"}, \code{"supertitle"}, \code{"release_date"}, \code{"href"}, \code{"uri"}, \code{"snippet"}, \code{"teaser_text"} or \code{"teaser_title"} (or a subset of these, if the \code{fields} parameter was set in \code{fromZeit}-function).
+#'@description \code{zeitToDf} converts the list object created by \code{\link{zeitGet}} to a data frame.
+#'@param ls list. List, created by \code{\link{zeitGet}}, that will be converted into the data frame.
+#'@param sort character. Specifies how the results are sorted. Possible options are available variables: \code{"uuid"}, \code{"title"}, \code{"subtitle"}, \code{"supertitle"}, \code{"release_date"}, \code{"href"}, \code{"uri"}, \code{"snippet"}, \code{"teaser_text"} or \code{"teaser_title"} (or a subset of these, if the \code{fields} parameter was set in \code{zeitGet}-function).
 #'@param save character. Specifies the file for automatic saving of the resulting data frame. Possible formats are \code{txt}, \code{sps}, \code{sas} or \code{dta}. No data is saved per default.
-#'@seealso \code{\link{zeitSetApiKey}} \code{\link{fromZeit}} 
+#'@details Files are saved to the working directory per default. Use \code{\link{zeitSave}} to change the path.
+#'@seealso \code{\link{zeitSetApiKey}} \code{\link{zeitGet}} 
 #'@return data frame
 #'@examples
 #'\dontrun{
 #'# get data
-#'mrkl <- fromZeit(q = "angela merkel", limit = "all", 
+#'mrkl <- zeitGet(q = "angela merkel", limit = "all", 
 #'	dateBegin = "2002-01-01", dateEnd = "2007-12-31")
 #'
 #'# convert to data frame without sorting and saving
@@ -79,7 +80,7 @@ zeitToDf <- function(ls, sort = c("uuid", "title", "subtitle", "supertitle", "re
 	# save
 	if(length(save) == 1) {
   	save <- match.arg(save)
-    saveZeit(df, path = paste0(getwd(), "/rzeit"), name = paste(str_replace_all(ls$queryTerm, "\\s", "_"), "articles_sorted_by", sortby, sep = "_"), format = save)
+    zeitSave(df, path = paste0(getwd(), "/rzeit"), name = paste(str_replace_all(ls$queryTerm, "\\s", "_"), "articles_sorted_by", sortby, sep = "_"), format = save)
   }
 	
 	return(df)

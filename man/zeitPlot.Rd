@@ -66,6 +66,6 @@ zeitPlot(dfFrequenciesWeek, yTitle = "Week", xTitle = "Frequencies of articles")
 Jan Dix (\email{jan.dix@uni-konstanz.de}), Jana Blahak (\email{jana.blahak@uni-konstanz.de}), Christian Graul (\email{christian.graul@gmail.com})
 }
 \seealso{
-\code{\link{zeitSetApiKey}} \code{\link{fromZeit}} \code{\link{zeitFrequencies}} \code{\link{zeitToDf}}
+\code{\link{zeitSetApiKey}} \code{\link{zeitGet}} \code{\link{zeitFrequencies}} \code{\link{zeitToDf}}
 }
 

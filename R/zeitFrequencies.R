@@ -1,14 +1,15 @@
 #'@title Calculate a frequency table
 #'@description \code{zeitFrequencies} calculates a frequency table, i.e. a data frame including a continous list of dates in choosen sequences and the related frequencies. Returned objects can directly be used with \code{\link{zeitPlot}}.
-#'@param ls list. List, created by \code{\link{fromZeit}}, to calculate the frequency table.
+#'@param ls list. List, created by \code{\link{zeitGet}}, to calculate the frequency table.
 #'@param sort character. Specifies how the results are sorted. Possible options are \code{"year"} (default), \code{"month"}, \code{"week"} or \code{"day"}.
 #'@param save character. Specifies the file for automatic saving of the resulting data frame. Possible formats are \code{"txt"}, \code{"sps"}, \code{"sas"} or \code{"dta"}. No data is saved per default.
-#'@seealso \code{\link{zeitSetApiKey}} \code{\link{fromZeit}} \code{\link{zeitToDf}} \code{\link{zeitPlot}}
+#'@details Files are saved to the working directory per default. Use \code{\link{zeitSave}} to change the path.
+#'@seealso \code{\link{zeitSetApiKey}} \code{\link{zeitGet}} \code{\link{zeitToDf}} \code{\link{zeitPlot}}
 #'@return data frame
 #'@examples
 #'\dontrun{
 #'# get data
-#'mrkl <- fromZeit(q = "angela merkel", limit = "all", 
+#'mrkl <- zeitGet(q = "angela merkel", limit = "all", 
 #'	dateBegin = "2002-01-01", dateEnd = "2007-12-31")
 #'
 #'# sort by month without saving
@@ -68,7 +69,7 @@ zeitFrequencies <- function(ls, sort = c("year", "month", "week", "day"), save =
 	# save
 	if(length(save) == 1) {
   	save <- match.arg(save)
-    saveZeit(freq, path = paste0(getwd(), "/rzeit"), name = paste(str_replace_all(ls$queryTerm, "\\s", "_"), "frequencies_sorted_by", sortby, sep = "_"), format = save)
+    zeitSave(freq, path = paste0(getwd(), "/rzeit"), name = paste(str_replace_all(ls$queryTerm, "\\s", "_"), "frequencies_sorted_by", sortby, sep = "_"), format = save)
   }
 	
 	return(freq)

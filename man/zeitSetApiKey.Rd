@@ -24,6 +24,6 @@ zeitSetApiKey(apiKey = "this_is_your_api_key", path = "")
 Jan Dix (\email{jan.dix@uni-konstanz.de}), Jana Blahak (\email{jana.blahak@uni-konstanz.de})
 }
 \seealso{
-\code{\link{fromZeit}} \code{\link{zeitFrequencies}} \code{\link{zeitToDf}} \code{\link{zeitPlot}}
+\code{\link{zeitGet}} \code{\link{zeitFrequencies}} \code{\link{zeitToDf}} \code{\link{zeitPlot}}
 }
 

@@ -32,7 +32,7 @@
 #'\item \code{lend}: The line end style. See \code{\link{par}} for usage.
 #'}
 #'Additional graphical parameters may be set calling \code{\link{par}} before \code{zeitPlot}. 
-#'@seealso \code{\link{zeitSetApiKey}} \code{\link{fromZeit}} \code{\link{zeitFrequencies}} \code{\link{zeitToDf}}
+#'@seealso \code{\link{zeitSetApiKey}} \code{\link{zeitGet}} \code{\link{zeitFrequencies}} \code{\link{zeitToDf}}
 #'@return Plots a graph based on given data frame.
 #'@examples
 #'\dontrun{
