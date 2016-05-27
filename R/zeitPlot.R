@@ -82,7 +82,7 @@ zeitPlot <- function(df, yTitle = "Frequency", xTitle = "Time", title = NULL, ab
 		yAxis <- df$freq
     yLimit <- c(0, max(yAxis, na.rm=TRUE) + 10)
 	} else {
-		yAxis <- df$freqPro
+		yAxis <- df$freqRel
 		yLimit <- c(1, 100)
 	}
 

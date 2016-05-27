@@ -22,26 +22,65 @@
 #'}
 #'@author Jan Dix (\email{jan.dix@@uni-konstanz.de}), Jana Blahak (\email{jana.blahak@@uni-konstanz.de}), Christian Graul (\email{christian.graul@@gmail.com})
 #'@export
-zeitToDf <- function(ls, sort = c("years", "months", "weeks", "days"), save = c("txt", "sps", "sas", "dta")){
+zeitToDf <- function(ls, sort = c("uuid", "title", "subtitle", "supertitle", "release_date", "href", "uri", "snippet", "teaser_text", "teaser_title"), save = c("txt", "sps", "sas", "dta")) {
 	
-	# check ls
-	if(is.null(ls[["matches"]][["release_date"]])) stop("Field 'release_date' is required to use 'zeitToDf' but missing")
+	# init variables
+	df <- uuid <- title <- subtitle <- supertitle <- release_date <- href <- uri <- snippet <- teaser_text <- teaser_title <- NULL
 	
-  # convert to data.frame
-  df <- as.data.frame(ls[1])
+	# prepare data frame
+	if(!is.null(ls[["matches"]][["release_date"]])) {
+		df <- data.frame(date = as.Date(ls[["matches"]][["release_date"]]))
+	}
+	if(!is.null(ls[["matches"]][["title"]])) {
+		if(is.null(df)) df <- data.frame(title = ls[["matches"]][["title"]])
+		else df$title <- ls[["matches"]][["title"]]
+	}
+	if(!is.null(ls[["matches"]][["subtitle"]])) {
+		if(is.null(df)) df <- data.frame(subtitle = ls[["matches"]][["subtitle"]])
+		else df$subtitle <- ls[["matches"]][["subtitle"]]
+	}
+	if(!is.null(ls[["matches"]][["href"]])) {
+		if(is.null(df)) df <- data.frame(href = ls[["matches"]][["href"]])
+		else df$href <- ls[["matches"]][["href"]]
+	}
+	if(!is.null(ls[["matches"]][["uri"]])) {
+		if(is.null(df)) df <- data.frame(uri = ls[["matches"]][["uri"]])
+		else df$uri <- ls[["matches"]][["uri"]]
+	}
+	if(!is.null(ls[["matches"]][["uuid"]])) {
+		if(is.null(df)) df <- data.frame(uuid = ls[["matches"]][["uuid"]])
+		else df$uuid <- ls[["matches"]][["uuid"]]
+	}
+	if(!is.null(ls[["matches"]][["supertitle"]])) {
+		if(is.null(df)) df <- data.frame(title = ls[["matches"]][["supertitle"]])
+		else df$supertitle <- ls[["matches"]][["supertitle"]]
+	}
+	if(!is.null(ls[["matches"]][["snippet"]])) {
+		if(is.null(df)) df <- data.frame(snippet = ls[["matches"]][["snippet"]])
+		else df$snippet <- ls[["matches"]][["snippet"]]
+	}
+	if(!is.null(ls[["matches"]][["teaser_text"]])) {
+		if(is.null(df)) df <- data.frame(teaser_text = ls[["matches"]][["teaser_text"]])
+		else df$teaser_text <- ls[["matches"]][["teaser_text"]]
+	}
+	if(!is.null(ls[["matches"]][["teaser_title"]])) {
+		if(is.null(df)) df <- data.frame(teaser_title = ls[["matches"]][["teaser_title"]])
+		else df$teaser_title <- ls[["matches"]][["teaser_title"]]
+	}
 	
-	# saving
-	if(length(save) > 1) {
-  	save <- NA
-  } else {
+	# sort
+	sortby <- match.arg(sort)
+	if(any(names(df) == sortby)) {
+		df <- df[order(df[[sortby]]),]
+	} else {
+		message(sortby, "not found in data set. Data might be sorted by:", names(df))
+	}
+	
+	# save
+	if(length(save) == 1) {
   	save <- match.arg(save)
+    saveZeit(df, path = paste0(getwd(), "/rzeit"), name = paste(str_replace_all(ls$queryTerm, "\\s", "_"), "articles_sorted_by", sortby, sep = "_"), format = save)
   }
 	
-  # switch between answers
-  sortby <- match.arg(sort)
-  switch(sortby,
-         years = yearsort(ls, save = save, freq = FALSE),
-         months = monthsort(ls, save = save, freq = FALSE),
-         weeks = weeksort(ls, save = save, freq = FALSE),
-         days = daysort(ls, save = save, freq = FALSE))
+	return(df)
 }

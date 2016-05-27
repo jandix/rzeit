@@ -19,26 +19,57 @@
 #'}
 #'@author Jan Dix (\email{jan.dix@@uni-konstanz.de}), Jana Blahak (\email{jana.blahak@@uni-konstanz.de}), Christian Graul (\email{christian.graul@@gmail.com})
 #'@export
-zeitFrequencies <- function(ls, sort = c("years", "months", "weeks", "days"), save = c("txt", "sps", "sas", "dta")){
+zeitFrequencies <- function(ls, sort = c("year", "month", "week", "day"), save = c("txt", "sps", "sas", "dta")){
 	
 	# check ls
 	if(is.null(ls[["matches"]][["release_date"]])) stop("Field 'release_date' is required to use 'zeitFrequencies' but missing")
 	
-	# convert to data.frame
-  df <- as.data.frame(ls[1])
+	# get dates
+	dates <- ls[["matches"]][["release_date"]]
+	dates <- substr(dates, 1, 10)
+	dates <- as.Date(dates)
 	
-	# saving
-	if(length(save) > 1) {
-  	save <- NA
-  } else {
-  	save <- match.arg(save)
+	# calculate frequencies and build data frame
+	sortby <- match.arg(sort)
+  if(sortby == "year") {
+  	yrs <- format(dates, "%Y")
+  	freq <- count(yrs)
+  	freq$date <- as.Date(paste(freq$x, "01", "01", sep = "-"))
+  	freq$year <- as.numeric(as.character(freq$x))
+  	freq$yearCount <- seq(1:nrow(freq))
+  } else if(sortby == "month") {
+  	mnths <- format(dates, "%Y-%m")
+  	freq <- count(mnths)
+  	freq$date <- as.Date(paste(freq$x, "01", sep = "-"))
+  	freq$month <- format(freq$date, "%b %Y")
+  	freq <- freq[order(freq$date),]
+  	freq$monthCount <- seq(1:nrow(freq))
+  } else if(sortby == "week") {
+  	wks <- ISOweek(dates)
+  	freq <- count(wks)
+  	freq$date <- ISOweek2date(paste(freq$x, 1, sep = "-"))
+  	freq$week <- ISOweek(freq$date)
+  	freq$weekCount <- seq(1:nrow(freq))
+  } else if(sortby == "day") {
+  	dys <- format(dates, "%Y-%m-%d")
+  	freq <- count(dys)
+  	freq$date <- as.Date(paste(freq$x, "01", sep = "-"))
+  	freq$day <- format(freq$date, "%Y-%m-%d")
+  	freq$dayCount <- seq(1:nrow(freq))
   }
-
-  # switch between answers
-  sortby <- match.arg(sort)
-  switch(sortby,
-         years = yearsort(ls, save = save, freq = TRUE),
-         months = monthsort(ls, save = save, freq = TRUE),
-         weeks = weeksort(ls, save = save, freq = TRUE),
-         days = daysort(ls, save = save, freq = TRUE))
+	
+	# clean data frame
+	freq <- freq[,-which(names(freq)=="x")]	# drop col x
+	freq$freqShift <- freq$freq	# shift col freq to right
+	freq <- freq[,-which(names(freq)=="freq")]	# drop col freq
+	names(freq)[which(names(freq)=="freqShift")] <- "freq"
+	freq$freqRel <- round(freq$freq * 100 / max(freq$freq, na.rm = TRUE))
+	
+	# save
+	if(length(save) == 1) {
+  	save <- match.arg(save)
+    saveZeit(freq, path = paste0(getwd(), "/rzeit"), name = paste(str_replace_all(ls$queryTerm, "\\s", "_"), "frequencies_sorted_by", sortby, sep = "_"), format = save)
+  }
+	
+	return(freq)
 }
