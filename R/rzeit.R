@@ -12,8 +12,11 @@
 #'\code{\link{zeitSetApiKey}} to set the API Key to the environment,
 #'\code{\link{zeitToDf}} to get a data frame with sorted articles
 #'@importFrom foreign write.foreign write.dta
+#'@importFrom ISOweek ISOweek
+#'@importFrom ISOweek ISOweek2date
 #'@importFrom jsonlite fromJSON
 #'@importFrom lubridate %m+%
+#'@importFrom plyr count
 #'@importFrom plyr rbind.fill
 #'@importFrom stringr str_extract str_replace_all
 #'@importFrom graphics abline axis lines plot
