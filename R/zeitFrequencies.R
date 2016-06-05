@@ -1,55 +1,76 @@
-#'@title Returns a frequency table in choosen format
-#'@description The returned data frame includes a continous list of dates in choosen sequences and the related frequencies. The number of either day/week/month/year, are comparable to the data frame, created by \code{\link{zeitToDf}}.
-#'@param ls list. List which will be converted into the data frame. Attention: This function only works with the returned element of \code{\link{fromZeit}}.
-#'@param sort character. Specifies how the results are sorted
-#'possible options:
-#' \itemize{
-#'   \item year
-#'   \item month
-#'   \item week
-#'   \item day
-#'   \item single
-#'   }
-#'@param save logical. If \code{TRUE} data frame is automatically saved in choosen format.
-#'@details Dataframes can be saved in different formats. You can choose your preferred format by using \code{options("zeitSaveDf" = > set your option here <)} to set the option to your preferred option. The default format for save is txt.
-#'Further options are:
-#'  \itemize{
-#'   \item txt
-#'   \item sps
-#'   \item sas
-#'   \item dta
-#'   }
-#'@seealso \code{\link{zeitSetApiKey}} \code{\link{fromZeit}} \code{\link{zeitToDf}} \code{\link{zeitPlot}}
+#'@title Calculate a frequency table
+#'@description \code{zeitFrequencies} calculates a frequency table, i.e. a data frame including a continous list of dates in choosen sequences and the related frequencies. Returned objects can directly be used with \code{\link{zeitPlot}}.
+#'@param ls list. List, created by \code{\link{zeitGet}}, to calculate the frequency table.
+#'@param sort character. Specifies how the results are sorted. Possible options are \code{"year"} (default), \code{"month"}, \code{"week"} or \code{"day"}.
+#'@param save character. Specifies the file for automatic saving of the resulting data frame. Possible formats are \code{"txt"}, \code{"sps"}, \code{"sas"} or \code{"dta"}. No data is saved per default.
+#'@details Files are saved to the working directory per default. Use \code{\link{zeitSave}} to change the path.
+#'@seealso \code{\link{zeitSetApiKey}} \code{\link{zeitGet}} \code{\link{zeitToDf}} \code{\link{zeitPlot}}
 #'@return data frame
 #'@examples
 #'\dontrun{
-#' ## Example 1: Returns a data frame, sorted by months and saved as .txt
+#'# get data
+#'mrkl <- zeitGet(q = "angela merkel", limit = "all", 
+#'	dateBegin = "2002-01-01", dateEnd = "2007-12-31")
 #'
-#'    zeitFrequencies(terms, "month", save = TRUE)
+#'# sort by month without saving
+#'zeitFrequencies(ls = mrkl, sort = "month")
 #'
-#'## Exapmle 2: Returns a data frame, sorted by month and saved as .sps
-#'
-#'    options("zeitSaveDf" = "sps")
-#'
-#'    zeitFrequencies(terms, "day", save = TRUE)
+#'# sort by day and saved as .sas
+#'zeitFrequencies(ls = mrkl, sort = "day", save = "sas")
 #'}
-#'@author Jan Dix, \email{jan.dix@@uni-konstanz.de} Jana Blahak, \email{jana.blahak@@uni-konstanz.de}
+#'@author Jan Dix (\email{jan.dix@@uni-konstanz.de}), Jana Blahak (\email{jana.blahak@@uni-konstanz.de}), Christian Graul (\email{christian.graul@@gmail.com})
 #'@export
-
-zeitFrequencies <- function(ls, sort = c("years", "months", "weeks", "days", "single"), save = FALSE){
+zeitFrequencies <- function(ls, sort = c("year", "month", "week", "day"), save = c("txt", "sps", "sas", "dta")){
 	
 	# check ls
 	if(is.null(ls[["matches"]][["release_date"]])) stop("Field 'release_date' is required to use 'zeitFrequencies' but missing")
 	
-  df <- as.data.frame(ls[1])
-
-  ### switch between answers
-
-  sortby <- match.arg(sort)
-  switch(sortby,
-         years = yearsort(ls, save = save, freq = TRUE),
-         months = monthsort(ls, save = save, freq = TRUE),
-         weeks = weeksort(ls, save = save, freq = TRUE),
-         days = daysort(ls, save = save, freq = TRUE),
-         single = df)
+	# get dates
+	dates <- ls[["matches"]][["release_date"]]
+	dates <- substr(dates, 1, 10)
+	dates <- as.Date(dates)
+	
+	# calculate frequencies and build data frame
+	sortby <- match.arg(sort)
+  if(sortby == "year") {
+  	yrs <- format(dates, "%Y")
+  	freq <- count(yrs)
+  	freq$date <- as.Date(paste(freq$x, "01", "01", sep = "-"))
+  	freq$year <- as.numeric(as.character(freq$x))
+  	freq$yearCount <- seq(1:nrow(freq))
+  } else if(sortby == "month") {
+  	mnths <- format(dates, "%Y-%m")
+  	freq <- count(mnths)
+  	freq$date <- as.Date(paste(freq$x, "01", sep = "-"))
+  	freq$month <- format(freq$date, "%b %Y")
+  	freq <- freq[order(freq$date),]
+  	freq$monthCount <- seq(1:nrow(freq))
+  } else if(sortby == "week") {
+  	wks <- ISOweek(dates)
+  	freq <- count(wks)
+  	freq$date <- ISOweek2date(paste(freq$x, 1, sep = "-"))
+  	freq$week <- ISOweek(freq$date)
+  	freq$weekCount <- seq(1:nrow(freq))
+  } else if(sortby == "day") {
+  	dys <- format(dates, "%Y-%m-%d")
+  	freq <- count(dys)
+  	freq$date <- as.Date(paste(freq$x, "01", sep = "-"))
+  	freq$day <- format(freq$date, "%Y-%m-%d")
+  	freq$dayCount <- seq(1:nrow(freq))
+  }
+	
+	# clean data frame
+	freq <- freq[,-which(names(freq)=="x")]	# drop col x
+	freq$freqShift <- freq$freq	# shift col freq to right
+	freq <- freq[,-which(names(freq)=="freq")]	# drop col freq
+	names(freq)[which(names(freq)=="freqShift")] <- "freq"
+	freq$freqRel <- round(freq$freq * 100 / max(freq$freq, na.rm = TRUE))
+	
+	# save
+	if(length(save) == 1) {
+  	save <- match.arg(save)
+    zeitSave(freq, path = paste0(getwd(), "/rzeit"), name = paste(str_replace_all(ls$queryTerm, "\\s", "_"), "frequencies_sorted_by", sortby, sep = "_"), format = save)
+  }
+	
+	return(freq)
 }

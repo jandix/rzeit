@@ -42,10 +42,10 @@ With `zeitSetApiKey`, we provide a comfortable function that stores the key in t
 zeitSetApiKey(apiKey = "set_your_api_key_here")
 ```
 
-Next, we can start tapping the API. `fromZeit` represents the core function of the package. Again, because the API Key is stored in the environment, we do not have to pass the key explicitly (but still  could do so using the `api` argument). As an example, we collect articles that include "Merkel" in the article body, headline or byline:
+Next, we can start tapping the API. `zeitGet` represents the core function of the package. Again, because the API Key is stored in the environment, we do not have to pass the key explicitly (but still  could do so using the `api` argument). As an example, we collect articles that include "Merkel" in the article body, headline or byline:
 
 ```{r first, eval = TRUE}
-merkel <- fromZeit(q = "Merkel",
+merkel <- zeitGet(q = "Merkel",
                    limit = 100,
                    dateBegin = "2015-01-01",
                    dateEnd = "2015-12-31")
@@ -57,17 +57,15 @@ The `results` object is of class `list` and provides information about the artic
  
 ```{r second, eval = TRUE}
 merkel_freq <- zeitFrequencies(ls = merkel,
-                               sort = "days",
-                               save = FALSE) 
+                               sort = "day") 
 head(merkel_freq)
 ```
 
-Apart from these meta data, we can also process substantive article information. The function `zeitToDf` converts the list returned from `fromZeit` into a data frame:
+Apart from these meta data, we can also process substantive article information. The function `zeitToDf` converts the list returned from `zeitGet` into a data frame. Articles can optionally be sorted by any meta data variable:
 
 ```{r third, eval = TRUE}
 merkel_articles <- zeitToDf(ls = merkel,
-                            sort = "days",
-                            save = FALSE) 
+                            sort = "release_date") 
 names(merkel_articles)
 ```
 
@@ -80,14 +78,14 @@ zeitPlot(df = merkel_freq)
 
 ## Detailed example
 
-So much for the package's basic functionality. In the following, we marginally modify our running example to demonstrate additional features of the `fromZeit` function. 
+So much for the package's basic functionality. In the following, we marginally modify our running example to demonstrate additional features of the `zeitGet` function. 
 
 ### Perform queries
 
 Now we search for multiple strings, i.e. articles containing "Bundeskanzlerin" or "Angela Merkel", in her first legislative period as the German chancellor. Furthermore, we set `limit = "all"` to get a comlete list of articles:
 
 ```{r multiString1, results = "hide", eval = FALSE}
-merkel_1 <- fromZeit(q = c("Bundeskanzlerin", "Angela Merkel"),
+merkel_1 <- zeitGet(q = c("Bundeskanzlerin", "Angela Merkel"),
                      limit = "all",
                      dateBegin = "2005-11-22",
                      dateEnd = "2009-10-27")
@@ -96,7 +94,7 @@ merkel_1 <- fromZeit(q = c("Bundeskanzlerin", "Angela Merkel"),
 For the second run we add a "+" to the (second) search term, to force a search for articles containing both, "Bundeskanzlerin" *and* "Angela Merkel":
 
 ```{r multiString2, results = "hide", eval = FALSE}
-merkel_2 <- fromZeit(q = c("Bundeskanzlerin", "+Angela Merkel"),
+merkel_2 <- zeitGet(q = c("Bundeskanzlerin", "+Angela Merkel"),
                      limit = "all",
                      dateBegin = "2005-11-22",
                      dateEnd = "2009-10-27")
@@ -105,22 +103,38 @@ merkel_2 <- fromZeit(q = c("Bundeskanzlerin", "+Angela Merkel"),
 Finally we are looking for articles on the exact term "Bundeskanzlerin Angela Merkel":
 
 ```{r multiString3, results = "hide", eval = TRUE}
-merkel_3 <- fromZeit(q = "Bundeskanzlerin Angela Merkel",
+merkel_3 <- zeitGet(q = "Bundeskanzlerin Angela Merkel",
                      limit = "all",
                      dateBegin = "2005-11-22",
                      dateEnd = "2009-10-27")
 
 merkel_3_freq <- zeitFrequencies(ls = merkel_3,
-                                 sort = "month",
-                                 save = FALSE)
+                                 sort = "month")
 ```
 
 ### Plot results
 
-Lastly, we plot the results of the last request:
+Now, we plot the results of the last request:
 
 ```{r, eval = TRUE, fig.width = 7.2, fig.height = 5}
 par(mfrow = c(1, 2))
 zeitPlot(merkel_3_freq, title = "Absolute Frequencies")
 zeitPlot(merkel_3_freq, title = "Relative Frequencies", absolute = FALSE)
+```
+
+There are several parameters to customize the plot. To hide the trend line or the mean line we set the the parameters `trend` or `mean` to `FALSE`:
+
+```{r, eval = TRUE, fig.width = 5, fig.height = 5}
+zeitPlot(merkel_3_freq, title = "Bars only",
+				 trend = FALSE, mean = FALSE)
+```
+
+Colors, line types, line widths and text size and orientation can be changed using optional graphical parameters:
+
+```{r, eval = TRUE, fig.width = 5, fig.height = 5}
+zeitPlot(merkel_3_freq, title = "Color, line type and line width",
+				 col.bar = "#C1C1C1", lty.bar = "longdash", lwd.bar = 3,
+				 col.trend = "#181818", lty.trend = "dotdash", lwd.trend = 2,
+				 col.mean = "#181818", lty.mean = "dotted", lwd.mean = 2,
+				 cex = 1.2)
 ```

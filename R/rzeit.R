@@ -5,15 +5,19 @@
 #'@name rzeit
 #'@docType package
 #'@references \url{http://developer.zeit.de}
-#'@seealso \code{\link{fromZeit}} to expose a search in the ZEIT online archive,
-#'\code{\link{zeitClient}} to get client information,
+#'@seealso \code{\link{zeitGet}} to expose a search in the ZEIT online archive,
+#'\code{\link{zeitToDf}} to get a data frame with sorted articles,
 #'\code{\link{zeitFrequencies}} to get a frequency table of the search results,
 #'\code{\link{zeitPlot}} to plot results of a search,
+#'\code{\link{zeitSave}} to save a data set to disc,
 #'\code{\link{zeitSetApiKey}} to set the API Key to the environment,
-#'\code{\link{zeitToDf}} to get a data frame with sorted articles
+#'\code{\link{zeitClient}} to get client information
 #'@importFrom foreign write.foreign write.dta
+#'@importFrom ISOweek ISOweek
+#'@importFrom ISOweek ISOweek2date
 #'@importFrom jsonlite fromJSON
 #'@importFrom lubridate %m+%
+#'@importFrom plyr count
 #'@importFrom plyr rbind.fill
 #'@importFrom stringr str_extract str_replace_all
 #'@importFrom graphics abline axis lines plot

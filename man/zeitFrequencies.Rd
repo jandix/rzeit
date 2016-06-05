@@ -2,59 +2,44 @@
 % Please edit documentation in R/zeitFrequencies.R
 \name{zeitFrequencies}
 \alias{zeitFrequencies}
-\title{Returns a frequency table in choosen format}
+\title{Calculate a frequency table}
 \usage{
-zeitFrequencies(ls, sort = c("years", "months", "weeks", "days", "single"),
-  save = FALSE)
+zeitFrequencies(ls, sort = c("year", "month", "week", "day"),
+  save = c("txt", "sps", "sas", "dta"))
 }
 \arguments{
-\item{ls}{list. List which will be converted into the data frame. Attention: This function only works with the returned element of \code{\link{fromZeit}}.}
+\item{ls}{list. List, created by \code{\link{zeitGet}}, to calculate the frequency table.}
 
-\item{sort}{character. Specifies how the results are sorted
-possible options:
-\itemize{
-  \item year
-  \item month
-  \item week
-  \item day
-  \item single
-  }}
+\item{sort}{character. Specifies how the results are sorted. Possible options are \code{"year"} (default), \code{"month"}, \code{"week"} or \code{"day"}.}
 
-\item{save}{logical. If \code{TRUE} data frame is automatically saved in choosen format.}
+\item{save}{character. Specifies the file for automatic saving of the resulting data frame. Possible formats are \code{"txt"}, \code{"sps"}, \code{"sas"} or \code{"dta"}. No data is saved per default.}
 }
 \value{
 data frame
 }
 \description{
-The returned data frame includes a continous list of dates in choosen sequences and the related frequencies. The number of either day/week/month/year, are comparable to the data frame, created by \code{\link{zeitToDf}}.
+\code{zeitFrequencies} calculates a frequency table, i.e. a data frame including a continous list of dates in choosen sequences and the related frequencies. Returned objects can directly be used with \code{\link{zeitPlot}}.
 }
 \details{
-Dataframes can be saved in different formats. You can choose your preferred format by using \code{options("zeitSaveDf" = > set your option here <)} to set the option to your preferred option. The default format for save is txt.
-Further options are:
- \itemize{
-  \item txt
-  \item sps
-  \item sas
-  \item dta
-  }
+Files are saved to the working directory per default. Use \code{\link{zeitSave}} to change the path.
 }
 \examples{
 \dontrun{
-## Example 1: Returns a data frame, sorted by months and saved as .txt
+# get data
+mrkl <- zeitGet(q = "angela merkel", limit = "all", 
+dateBegin = "2002-01-01", dateEnd = "2007-12-31")
 
-   zeitFrequencies(terms, "month", save = TRUE)
+# sort by month without saving
+zeitFrequencies(ls = mrkl, sort = "month")
 
-## Exapmle 2: Returns a data frame, sorted by month and saved as .sps
-
-   options("zeitSaveDf" = "sps")
-
-   zeitFrequencies(terms, "day", save = TRUE)
+# sort by day and saved as .sas
+zeitFrequencies(ls = mrkl, sort = "day", save = "sas")
 }
 }
 \author{
-Jan Dix, \email{jan.dix@uni-konstanz.de} Jana Blahak, \email{jana.blahak@uni-konstanz.de}
+Jan Dix (\email{jan.dix@uni-konstanz.de}), Jana Blahak (\email{jana.blahak@uni-konstanz.de}), Christian Graul (\email{christian.graul@gmail.com})
 }
 \seealso{
-\code{\link{zeitSetApiKey}} \code{\link{fromZeit}} \code{\link{zeitToDf}} \code{\link{zeitPlot}}
+\code{\link{zeitSetApiKey}} \code{\link{zeitGet}} \code{\link{zeitToDf}} \code{\link{zeitPlot}}
 }
 

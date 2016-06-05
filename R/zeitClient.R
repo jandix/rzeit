@@ -3,7 +3,7 @@
 #'@param api character. The personal api code. To request an API key see: \url{http://developer.zeit.de/quickstart/} This parameter is by default set to the R Environment.
 #'@param print logical. If \code{TRUE} (default), the client information is printed.
 #'@return a list of information about the client and API usage
-#'@author Christian Graul
+#'@author Christian Graul (\email{christian.graul@@gmail.com})
 #'@export
 #'@examples
 #'\dontrun{

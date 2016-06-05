@@ -1,54 +1,87 @@
-#'@title Returns a data frame with sorted articles
-#'@description The data frame includes the articles, the related links and the number of either day/week/month/year, comparable to the data frame, created by \code{\link{zeitFrequencies}}.
-#'@param ls list. List which will be converted into the data frame. Attention: This function only works with the returned element of \code{\link{fromZeit}}.
-#'@param sort character. Specifies how the results are sorted
-#'possible options:
-#' \itemize{
-#'   \item year
-#'   \item month
-#'   \item week
-#'   \item day
-#'   \item single
-#'   }
-#'@param save logical. If \code{TRUE} data frame is automatically saved in choosen format.
-#'@details Dataframes can be saved in different formats. You can choose your preferred format by using \code{options("zeitSaveDf" = > set your option here <)} to set the option to your preferred option. The default format for save is txt.
-#'Further options are:
-#'  \itemize{
-#'   \item txt
-#'   \item sps
-#'   \item sas
-#'   \item dta
-#'   }
-#'@seealso \code{\link{zeitSetApiKey}} \code{\link{fromZeit}} \code{\link{zeitFrequencies}} \code{\link{zeitPlot}}
+#'@title Convert list to data frame with sorted articles
+#'@description \code{zeitToDf} converts the list object created by \code{\link{zeitGet}} to a data frame.
+#'@param ls list. List, created by \code{\link{zeitGet}}, that will be converted into the data frame.
+#'@param sort character. Specifies how the results are sorted. Possible options are available variables: \code{"uuid"}, \code{"title"}, \code{"subtitle"}, \code{"supertitle"}, \code{"release_date"}, \code{"href"}, \code{"uri"}, \code{"snippet"}, \code{"teaser_text"} or \code{"teaser_title"} (or a subset of these, if the \code{fields} parameter was set in \code{zeitGet}-function).
+#'@param save character. Specifies the file for automatic saving of the resulting data frame. Possible formats are \code{txt}, \code{sps}, \code{sas} or \code{dta}. No data is saved per default.
+#'@details Files are saved to the working directory per default. Use \code{\link{zeitSave}} to change the path.
+#'@seealso \code{\link{zeitSetApiKey}} \code{\link{zeitGet}} 
 #'@return data frame
 #'@examples
 #'\dontrun{
-#' ## Example 1: Returns a list with two data frames, sorted by months and saved as .txt
+#'# get data
+#'mrkl <- zeitGet(q = "angela merkel", limit = "all", 
+#'	dateBegin = "2002-01-01", dateEnd = "2007-12-31")
 #'
-#'    zeitToDf(terms, "month", save = TRUE)
+#'# convert to data frame without sorting and saving
+#'zeitToDf(ls = mrkl)
 #'
-#'## Exapmle 2: Returns a list with two data frames, sorted by month and saved as .sps
+#'# convert and sort by release_date
+#'zeitToDf(ls = mrkl, sort = "release_date")
 #'
-#'    options("zeitSaveDf" = "sps")
-#'
-#'    zeitToDf(terms, "day", save = TRUE)
+#'# convert and save as .txt
+#'zeitToDf(ls = mrkl, save = "txt")
 #'}
-#'@author Jan Dix, \email{jan.dix@@uni-konstanz.de} Jana Blahak, \email{jana.blahak@@uni-konstanz.de}
-#' @export
-zeitToDf <- function(ls, sort = c("years", "months", "weeks", "days", "single"), save = FALSE){
+#'@author Jan Dix (\email{jan.dix@@uni-konstanz.de}), Jana Blahak (\email{jana.blahak@@uni-konstanz.de}), Christian Graul (\email{christian.graul@@gmail.com})
+#'@export
+zeitToDf <- function(ls, sort = c("uuid", "title", "subtitle", "supertitle", "release_date", "href", "uri", "snippet", "teaser_text", "teaser_title"), save = c("txt", "sps", "sas", "dta")) {
 	
-	# check ls
-	if(is.null(ls[["matches"]][["release_date"]])) stop("Field 'release_date' is required to use 'zeitToDf' but missing")
+	# init variables
+	df <- uuid <- title <- subtitle <- supertitle <- release_date <- href <- uri <- snippet <- teaser_text <- teaser_title <- NULL
 	
-  df <- as.data.frame(ls[1])
-
-  ### switch between answers
-
-  sortby <- match.arg(sort)
-  switch(sortby,
-         years = yearsort(ls, save = save, freq = FALSE),
-         months = monthsort(ls, save = save, freq = FALSE),
-         weeks = weeksort(ls, save = save, freq = FALSE),
-         days = daysort(ls, save = save, freq = FALSE),
-         single = df)
+	# prepare data frame
+	if(!is.null(ls[["matches"]][["release_date"]])) {
+		df <- data.frame(date = as.Date(ls[["matches"]][["release_date"]]))
+	}
+	if(!is.null(ls[["matches"]][["title"]])) {
+		if(is.null(df)) df <- data.frame(title = ls[["matches"]][["title"]])
+		else df$title <- ls[["matches"]][["title"]]
+	}
+	if(!is.null(ls[["matches"]][["subtitle"]])) {
+		if(is.null(df)) df <- data.frame(subtitle = ls[["matches"]][["subtitle"]])
+		else df$subtitle <- ls[["matches"]][["subtitle"]]
+	}
+	if(!is.null(ls[["matches"]][["href"]])) {
+		if(is.null(df)) df <- data.frame(href = ls[["matches"]][["href"]])
+		else df$href <- ls[["matches"]][["href"]]
+	}
+	if(!is.null(ls[["matches"]][["uri"]])) {
+		if(is.null(df)) df <- data.frame(uri = ls[["matches"]][["uri"]])
+		else df$uri <- ls[["matches"]][["uri"]]
+	}
+	if(!is.null(ls[["matches"]][["uuid"]])) {
+		if(is.null(df)) df <- data.frame(uuid = ls[["matches"]][["uuid"]])
+		else df$uuid <- ls[["matches"]][["uuid"]]
+	}
+	if(!is.null(ls[["matches"]][["supertitle"]])) {
+		if(is.null(df)) df <- data.frame(title = ls[["matches"]][["supertitle"]])
+		else df$supertitle <- ls[["matches"]][["supertitle"]]
+	}
+	if(!is.null(ls[["matches"]][["snippet"]])) {
+		if(is.null(df)) df <- data.frame(snippet = ls[["matches"]][["snippet"]])
+		else df$snippet <- ls[["matches"]][["snippet"]]
+	}
+	if(!is.null(ls[["matches"]][["teaser_text"]])) {
+		if(is.null(df)) df <- data.frame(teaser_text = ls[["matches"]][["teaser_text"]])
+		else df$teaser_text <- ls[["matches"]][["teaser_text"]]
+	}
+	if(!is.null(ls[["matches"]][["teaser_title"]])) {
+		if(is.null(df)) df <- data.frame(teaser_title = ls[["matches"]][["teaser_title"]])
+		else df$teaser_title <- ls[["matches"]][["teaser_title"]]
+	}
+	
+	# sort
+	sortby <- match.arg(sort)
+	if(any(names(df) == sortby)) {
+		df <- df[order(df[[sortby]]),]
+	} else {
+		message(sortby, "not found in data set. Data might be sorted by:", names(df))
+	}
+	
+	# save
+	if(length(save) == 1) {
+  	save <- match.arg(save)
+    zeitSave(df, path = paste0(getwd(), "/rzeit"), name = paste(str_replace_all(ls$queryTerm, "\\s", "_"), "articles_sorted_by", sortby, sep = "_"), format = save)
+  }
+	
+	return(df)
 }

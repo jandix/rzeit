@@ -2,59 +2,48 @@
 % Please edit documentation in R/zeitToDf.R
 \name{zeitToDf}
 \alias{zeitToDf}
-\title{Returns a data frame with sorted articles}
+\title{Convert list to data frame with sorted articles}
 \usage{
-zeitToDf(ls, sort = c("years", "months", "weeks", "days", "single"),
-  save = FALSE)
+zeitToDf(ls, sort = c("uuid", "title", "subtitle", "supertitle",
+  "release_date", "href", "uri", "snippet", "teaser_text", "teaser_title"),
+  save = c("txt", "sps", "sas", "dta"))
 }
 \arguments{
-\item{ls}{list. List which will be converted into the data frame. Attention: This function only works with the returned element of \code{\link{fromZeit}}.}
+\item{ls}{list. List, created by \code{\link{zeitGet}}, that will be converted into the data frame.}
 
-\item{sort}{character. Specifies how the results are sorted
-possible options:
-\itemize{
-  \item year
-  \item month
-  \item week
-  \item day
-  \item single
-  }}
+\item{sort}{character. Specifies how the results are sorted. Possible options are available variables: \code{"uuid"}, \code{"title"}, \code{"subtitle"}, \code{"supertitle"}, \code{"release_date"}, \code{"href"}, \code{"uri"}, \code{"snippet"}, \code{"teaser_text"} or \code{"teaser_title"} (or a subset of these, if the \code{fields} parameter was set in \code{zeitGet}-function).}
 
-\item{save}{logical. If \code{TRUE} data frame is automatically saved in choosen format.}
+\item{save}{character. Specifies the file for automatic saving of the resulting data frame. Possible formats are \code{txt}, \code{sps}, \code{sas} or \code{dta}. No data is saved per default.}
 }
 \value{
 data frame
 }
 \description{
-The data frame includes the articles, the related links and the number of either day/week/month/year, comparable to the data frame, created by \code{\link{zeitFrequencies}}.
+\code{zeitToDf} converts the list object created by \code{\link{zeitGet}} to a data frame.
 }
 \details{
-Dataframes can be saved in different formats. You can choose your preferred format by using \code{options("zeitSaveDf" = > set your option here <)} to set the option to your preferred option. The default format for save is txt.
-Further options are:
- \itemize{
-  \item txt
-  \item sps
-  \item sas
-  \item dta
-  }
+Files are saved to the working directory per default. Use \code{\link{zeitSave}} to change the path.
 }
 \examples{
 \dontrun{
-## Example 1: Returns a list with two data frames, sorted by months and saved as .txt
+# get data
+mrkl <- zeitGet(q = "angela merkel", limit = "all", 
+dateBegin = "2002-01-01", dateEnd = "2007-12-31")
 
-   zeitToDf(terms, "month", save = TRUE)
+# convert to data frame without sorting and saving
+zeitToDf(ls = mrkl)
 
-## Exapmle 2: Returns a list with two data frames, sorted by month and saved as .sps
+# convert and sort by release_date
+zeitToDf(ls = mrkl, sort = "release_date")
 
-   options("zeitSaveDf" = "sps")
-
-   zeitToDf(terms, "day", save = TRUE)
+# convert and save as .txt
+zeitToDf(ls = mrkl, save = "txt")
 }
 }
 \author{
-Jan Dix, \email{jan.dix@uni-konstanz.de} Jana Blahak, \email{jana.blahak@uni-konstanz.de}
+Jan Dix (\email{jan.dix@uni-konstanz.de}), Jana Blahak (\email{jana.blahak@uni-konstanz.de}), Christian Graul (\email{christian.graul@gmail.com})
 }
 \seealso{
-\code{\link{zeitSetApiKey}} \code{\link{fromZeit}} \code{\link{zeitFrequencies}} \code{\link{zeitPlot}}
+\code{\link{zeitSetApiKey}} \code{\link{zeitGet}}
 }
 
