@@ -1,37 +1,11 @@
 Package: rzeit
-Title: Client for the ZEIT ONLINE Content API
-Description: Interface to gather newspaper articles from 'DIE ZEIT' and 'ZEIT ONLINE',
-	based on a multilevel query. Including sorting algorithms and graphical output options. 
-	A personal API key is required for usage.
-Version: 0.5
-Date: 2016-04-27
-Authors@R: c(person("Jan", "Dix",  role = c("cre"), email = "jan.dix@uni-konstanz.de"), 
-	person ("Jana", "Blahak", role = c("aut"), email= "jana.blahak@uni-konstanz.de"),
-	person ("Simon", "Munzert", role = c("ths")),
-	person ("Christian", "Graul", role = c("ctb"), email= "christian.graul@gmail.com"))
-Depends:
-    R (>= 3.2.0)
-License: MIT + file LICENSE
-LazyData: TRUE
-VignetteBuilder: knitr
-Imports:
-	stringr,
-	jsonlite,
-	lubridate,
-	plyr,
-	ISOweek,
-	foreign
-Suggests:
-	rvest,
-	XML,
-	networkD3,
-	knitr
-NeedsCompilation: no
-Author: Jan Dix [cre],
-    Jana Blahak [aut],
-    Simon Munzert [ths],
-    Christian Graul [ctb]
-Maintainer: Jan Dix <jan.dix@uni-konstanz.de>
-URL: http://github.com/tollpatsch/rzeit
-BugReports: http://github.com/tollpatsch/rzeit/issues
-RoxygenNote: 5.0.1
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Author: Who wrote it
+Maintainer: The package maintainer <yourself@somewhere.net>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
