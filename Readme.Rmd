@@ -4,7 +4,7 @@ Client for the ZEIT ONLINE Content API - Interface to gather newspaper articles 
 
 # Status 
 
-The package is still under developement and might yet not be stable - but will be in no-time. 
+The package is not supported anymore, but still stable. The package will be replaced by [Version 2](https://github.com/tollpatsch/rzeit-v2/).
 
 # Installation
 
