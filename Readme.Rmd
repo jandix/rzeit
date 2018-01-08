@@ -1,10 +1,12 @@
+Their is a package on [CRAN](https://cran.r-project.org/web/packages/diezeit/index.html) by Christian Graul.
+
 # Purpose / Description
 
 Client for the ZEIT ONLINE Content API - Interface to gather newspaper articles from *DIE ZEIT* and *ZEIT ONLINE*, based on a multilevel query. Including sorting algorithms and graphical output options. 
 
 # Status 
 
-The package is not supported anymore, but still stable. The package will be replaced by [Version 2](https://github.com/tollpatsch/rzeit-v2/).
+The package is not supported anymore, but still stable.
 
 # Installation
 
