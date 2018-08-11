@@ -1,3 +1,5 @@
+:warning: There is a [new version](https://github.com/jandix/rzeit2) of this package.
+
 # Purpose / Description
 
 Client for the ZEIT ONLINE Content API - Interface to gather newspaper articles from *DIE ZEIT* and *ZEIT ONLINE*, based on a multilevel query. Including sorting algorithms and graphical output options. 
